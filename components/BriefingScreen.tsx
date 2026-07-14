@@ -126,7 +126,7 @@ export default function BriefingScreen({
         </button>
         <button
           onClick={onBegin}
-          className="rounded-full bg-amber px-6 py-3 text-sm font-medium text-ink shadow-[0_8px_30px_-8px_rgba(227,168,87,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_12px_36px_-6px_rgba(227,168,87,0.75)] active:scale-[0.98]"
+          className="rounded-full bg-amber px-6 py-3 text-sm font-medium text-ink shadow-[0_8px_30px_-8px_rgba(201,166,107,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_12px_36px_-6px_rgba(201,166,107,0.75)] active:scale-[0.98]"
         >
           Start the interview →
         </button>

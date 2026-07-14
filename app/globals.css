@@ -14,8 +14,8 @@ body {
 body {
   background-color: #1b222c;
   background-image:
-    radial-gradient(ellipse 900px 600px at 12% -10%, rgba(227, 168, 87, 0.16), transparent 60%),
-    radial-gradient(ellipse 800px 700px at 110% 10%, rgba(111, 162, 135, 0.10), transparent 55%),
+    radial-gradient(ellipse 900px 600px at 12% -10%, rgba(201, 166, 107, 0.16), transparent 60%),
+    radial-gradient(ellipse 800px 700px at 110% 10%, rgba(110, 156, 124, 0.10), transparent 55%),
     radial-gradient(ellipse 1000px 800px at 50% 120%, rgba(91, 107, 124, 0.18), transparent 60%);
   background-attachment: fixed;
   position: relative;
@@ -106,7 +106,7 @@ body::before {
 }
 
 .text-glow {
-  text-shadow: 0 0 24px rgba(227, 168, 87, 0.35);
+  text-shadow: 0 0 24px rgba(201, 166, 107, 0.35);
 }
 
 .orb {

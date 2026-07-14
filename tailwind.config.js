@@ -7,17 +7,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: "#1B222C",
-        panel: "#232C38",
-        panelLight: "#2E3947",
-        slate: "#5B6B7C",
-        paper: "#F4F1EA",
-        amber: "#E3A857",
-        onair: "#E3543F",
-        good: "#6FA287",
+        ink: "#15161A",
+        panel: "#1D1F24",
+        panelLight: "#262931",
+        slate: "#6B6F76",
+        paper: "#F1EDE4",
+        amber: "#C9A66B",
+        goldLight: "#EFE0B8",
+        onair: "#B8503F",
+        good: "#6E9C7C",
       },
       fontFamily: {
         display: ["var(--font-display)", "sans-serif"],
+        serif: ["var(--font-serif)", "serif"],
         body: ["var(--font-body)", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
       },

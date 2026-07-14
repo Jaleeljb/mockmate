@@ -28,7 +28,7 @@ export default function ProgressRail({
             title={`${CATEGORY_LABEL[question.category]} — ${question.text}`}
             className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide backdrop-blur transition-colors duration-300 ${
               state === "current"
-                ? "border-amber bg-amber/10 text-amber shadow-[0_0_16px_-4px_rgba(227,168,87,0.6)]"
+                ? "border-amber bg-amber/10 text-amber shadow-[0_0_16px_-4px_rgba(201,166,107,0.6)]"
                 : state === "done"
                 ? "border-good/40 bg-ink/40 text-good/80"
                 : "border-slate/30 bg-ink/30 text-slate"

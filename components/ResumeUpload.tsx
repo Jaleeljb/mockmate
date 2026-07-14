@@ -44,7 +44,7 @@ export default function ResumeUpload({
         <h1 className="font-display text-4xl font-medium leading-[1.05] text-paper sm:text-6xl">
           Upload your resume,
           <br />
-          <span className="bg-gradient-to-r from-amber via-[#f0c98a] to-amber bg-clip-text text-transparent text-glow">
+          <span className="bg-gradient-to-r from-amber via-[#EFE0B8] to-amber bg-clip-text text-transparent text-glow">
             walk in prepared.
           </span>
         </h1>
@@ -69,7 +69,7 @@ export default function ResumeUpload({
         }}
         className={`glass-panel flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-14 text-center transition-all duration-300 ${
           dragging
-            ? "border-amber shadow-[0_0_0_1px_rgba(227,168,87,0.4),0_30px_60px_-20px_rgba(227,168,87,0.25)] scale-[1.01]"
+            ? "border-amber shadow-[0_0_0_1px_rgba(201,166,107,0.4),0_30px_60px_-20px_rgba(201,166,107,0.25)] scale-[1.01]"
             : "border-slate/40 hover:border-slate/70"
         }`}
       >
@@ -84,7 +84,7 @@ export default function ResumeUpload({
           }}
         />
         <div
-          className={`mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber/15 text-amber shadow-[0_0_30px_-6px_rgba(227,168,87,0.5)] transition-transform duration-300 ${
+          className={`mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber/15 text-amber shadow-[0_0_30px_-6px_rgba(201,166,107,0.5)] transition-transform duration-300 ${
             dragging ? "scale-110" : ""
           } ${loading ? "animate-pulseRec" : ""}`}
         >

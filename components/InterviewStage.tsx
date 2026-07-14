@@ -252,7 +252,7 @@ export default function InterviewStage({
             )}
             <button
               onClick={finishAnswer}
-              className="rounded-full bg-amber px-5 py-2 text-sm font-medium text-ink shadow-[0_6px_20px_-6px_rgba(227,168,87,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_10px_28px_-6px_rgba(227,168,87,0.75)]"
+              className="rounded-full bg-amber px-5 py-2 text-sm font-medium text-ink shadow-[0_6px_20px_-6px_rgba(201,166,107,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_10px_28px_-6px_rgba(201,166,107,0.75)]"
             >
               {currentIndex >= questions.length - 1 ? "Finish interview" : "Next question →"}
             </button>

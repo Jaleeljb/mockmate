@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Space_Grotesk, Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
   weight: ["500", "700"],
   variable: "--font-display",
+});
+
+const serif = Fraunces({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
 });
 
 const body = Inter({
@@ -32,7 +39,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`scroll-smooth ${display.variable} ${serif.variable} ${body.variable} ${mono.variable}`}
+    >
       <body className="bg-ink text-paper font-body antialiased">{children}</body>
     </html>
   );

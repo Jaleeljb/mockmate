@@ -41,7 +41,7 @@ export default function SummaryScreen({
         <ul className="mt-3 space-y-3">
           {feedback.notes.map((note, i) => (
             <li key={i} className="flex gap-3 text-sm text-paper/80">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber shadow-[0_0_8px_rgba(227,168,87,0.6)]" />
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber shadow-[0_0_8px_rgba(201,166,107,0.6)]" />
               {note}
             </li>
           ))}
@@ -81,7 +81,7 @@ export default function SummaryScreen({
 
       <button
         onClick={onRestart}
-        className="mt-10 rounded-full border border-slate/40 px-6 py-3 text-sm text-paper/70 transition-all hover:border-amber hover:text-amber hover:shadow-[0_8px_24px_-8px_rgba(227,168,87,0.4)]"
+        className="mt-10 rounded-full border border-slate/40 px-6 py-3 text-sm text-paper/70 transition-all hover:border-amber hover:text-amber hover:shadow-[0_8px_24px_-8px_rgba(201,166,107,0.4)]"
       >
         Run another session
       </button>
