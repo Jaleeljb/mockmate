@@ -7,12 +7,12 @@ export default function Waveform({ active }: { active: boolean }) {
       {bars.map((h, i) => (
         <span
           key={i}
-          className={`w-1 rounded-full bg-amber transition-all duration-300 ${
-            active ? "animate-pulseRec" : "opacity-30"
-          }`}
+          className={`w-1 rounded-full transition-all duration-300 ${active ? "animate-pulseRec" : "opacity-25"}`}
           style={{
             height: active ? `${h}px` : "4px",
             animationDelay: `${i * 90}ms`,
+            background: "linear-gradient(180deg, #f0c98a, #e3a857)",
+            boxShadow: active ? "0 0 8px rgba(227,168,87,0.55)" : "none",
           }}
         />
       ))}

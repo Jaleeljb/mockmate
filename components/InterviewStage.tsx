@@ -193,7 +193,7 @@ export default function InterviewStage({
 
       <ProgressRail plan={questions} currentIndex={currentIndex} />
 
-      <div className="rounded-2xl border border-slate/30 bg-panel p-6 sm:p-8">
+      <div className="viewfinder glass-panel rounded-2xl border border-slate/15 p-6 sm:p-8">
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber">
           Question {currentIndex + 1} of {questions.length} · {currentQuestion.category}
         </p>
@@ -216,7 +216,7 @@ export default function InterviewStage({
           onChange={(e) => setTranscript(e.target.value)}
           placeholder="Your answer will appear here as you speak — or just type it directly."
           rows={5}
-          className="mt-4 w-full rounded-xl border border-slate/30 bg-ink/50 p-4 text-paper placeholder:text-paper/30 focus:border-amber"
+          className="mt-4 w-full rounded-xl border border-slate/30 bg-ink/40 p-4 text-paper placeholder:text-paper/30 transition-colors focus:border-amber/60 focus:bg-ink/60 focus:outline-none focus:ring-1 focus:ring-amber/30"
         />
 
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
@@ -252,7 +252,7 @@ export default function InterviewStage({
             )}
             <button
               onClick={finishAnswer}
-              className="rounded-full bg-amber px-5 py-2 text-sm font-medium text-ink transition-transform hover:scale-[1.02]"
+              className="rounded-full bg-amber px-5 py-2 text-sm font-medium text-ink shadow-[0_6px_20px_-6px_rgba(227,168,87,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_10px_28px_-6px_rgba(227,168,87,0.75)]"
             >
               {currentIndex >= questions.length - 1 ? "Finish interview" : "Next question →"}
             </button>

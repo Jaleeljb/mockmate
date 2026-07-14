@@ -6,6 +6,7 @@ import ResumeUpload from "./ResumeUpload";
 import BriefingScreen from "./BriefingScreen";
 import InterviewStage from "./InterviewStage";
 import SummaryScreen from "./SummaryScreen";
+import StudioGlow from "./StudioGlow";
 import { buildInterviewPlan } from "@/lib/interviewEngine";
 
 type AppPhase = "upload" | "briefing" | "session" | "summary";
@@ -71,14 +72,17 @@ export default function InterviewApp() {
   }, [phase, profile, plan, result, sessionKey]);
 
   return (
-    <main className="min-h-screen px-5 py-10 sm:px-10 sm:py-16">
-      <div className="mx-auto mb-10 flex max-w-3xl items-center justify-between">
-        <span className="font-display text-lg font-medium text-paper">Studio 15</span>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-paper/30">
+    <main className="relative z-10 min-h-screen px-5 py-10 sm:px-10 sm:py-16">
+      <StudioGlow />
+      <div className="relative z-10 mx-auto mb-10 flex max-w-3xl items-center justify-between">
+        <span className="font-display text-lg font-medium text-paper">
+          Studio <span className="text-amber">15</span>
+        </span>
+        <span className="rounded-full border border-slate/30 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-paper/40">
           {phase}
         </span>
       </div>
-      {content}
+      <div className="relative z-10">{content}</div>
     </main>
   );
 }

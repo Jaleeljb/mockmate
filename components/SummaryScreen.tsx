@@ -16,30 +16,32 @@ export default function SummaryScreen({
 
   return (
     <div className="mx-auto w-full max-w-3xl animate-rise pb-16">
-      <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-amber">
-        Studio 15 · Session Report
-      </p>
-      <h1 className="font-display text-3xl font-medium text-paper sm:text-4xl">
-        That&apos;s a wrap.
-      </h1>
-      <p className="mt-3 text-paper/60">
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-good/30 bg-good/5 px-3 py-1">
+        <span className="h-1.5 w-1.5 rounded-full bg-good" />
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-good">Studio 15 · Session Report</p>
+      </div>
+      <h1 className="font-display text-3xl font-medium text-paper sm:text-4xl">That&apos;s a wrap.</h1>
+      <p className="mt-3 max-w-xl text-paper/60">
         This read-out is generated from your own answers — pacing, length, and word
         choice — not a judgment of whether the content was technically correct.
       </p>
 
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <Stat label="Duration" value={formatDuration(feedback.totalDurationSeconds)} />
-        <Stat label="Questions" value={String(answers.length)} />
-        <Stat label="Avg. words / answer" value={String(feedback.averageWordsPerAnswer)} />
-        <Stat label="Filler words / answer" value={feedback.averageFillerPerAnswer.toFixed(1)} />
+        <Stat label="Duration" value={formatDuration(feedback.totalDurationSeconds)} delay={0} />
+        <Stat label="Questions" value={String(answers.length)} delay={80} />
+        <Stat label="Avg. words / answer" value={String(feedback.averageWordsPerAnswer)} delay={160} />
+        <Stat label="Filler words / answer" value={feedback.averageFillerPerAnswer.toFixed(1)} delay={240} />
       </div>
 
-      <div className="mt-8 rounded-xl border border-slate/30 bg-panel p-5">
+      <div
+        className="glass-panel border border-slate/15 animate-rise mt-8 rounded-xl p-5"
+        style={{ animationDelay: "300ms", animationFillMode: "backwards" }}
+      >
         <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">Coaching notes</p>
         <ul className="mt-3 space-y-3">
           {feedback.notes.map((note, i) => (
             <li key={i} className="flex gap-3 text-sm text-paper/80">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber" />
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber shadow-[0_0_8px_rgba(227,168,87,0.6)]" />
               {note}
             </li>
           ))}
@@ -47,14 +49,12 @@ export default function SummaryScreen({
       </div>
 
       <div className="mt-8">
-        <p className="mb-3 font-mono text-[10px] uppercase tracking-wide text-paper/40">
-          Answer by answer
-        </p>
+        <p className="mb-3 font-mono text-[10px] uppercase tracking-wide text-paper/40">Answer by answer</p>
         <div className="space-y-3">
           {answers.map((answer, i) => (
             <details
               key={answer.questionId}
-              className="group rounded-xl border border-slate/30 bg-panel p-4 open:border-amber/40"
+              className="glass-panel group rounded-xl border border-slate/15 p-4 transition-colors open:border-amber/40"
             >
               <summary className="cursor-pointer list-none">
                 <div className="flex items-start justify-between gap-4">
@@ -81,7 +81,7 @@ export default function SummaryScreen({
 
       <button
         onClick={onRestart}
-        className="mt-10 rounded-full border border-slate/40 px-6 py-3 text-sm text-paper/70 transition-colors hover:border-amber hover:text-amber"
+        className="mt-10 rounded-full border border-slate/40 px-6 py-3 text-sm text-paper/70 transition-all hover:border-amber hover:text-amber hover:shadow-[0_8px_24px_-8px_rgba(227,168,87,0.4)]"
       >
         Run another session
       </button>
@@ -89,11 +89,16 @@ export default function SummaryScreen({
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value, delay }: { label: string; value: string; delay: number }) {
   return (
-    <div className="rounded-xl border border-slate/30 bg-panel p-4">
+    <div
+      className="glass-panel border border-slate/15 animate-rise rounded-xl p-4"
+      style={{ animationDelay: `${delay}ms`, animationFillMode: "backwards" }}
+    >
       <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">{label}</p>
-      <p className="mt-1 font-display text-2xl text-paper">{value}</p>
+      <p className="mt-1 bg-gradient-to-br from-paper to-paper/70 bg-clip-text font-display text-2xl text-transparent">
+        {value}
+      </p>
     </div>
   );
 }

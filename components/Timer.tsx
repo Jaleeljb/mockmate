@@ -18,13 +18,13 @@ export default function Timer({
   const reachedTarget = elapsedSeconds >= targetSeconds;
 
   return (
-    <div className="flex items-center gap-3">
-      <span
-        className={`h-2.5 w-2.5 rounded-full ${
-          live ? "bg-onair animate-pulseRec" : "bg-slate"
-        }`}
-        aria-hidden
-      />
+    <div className="glass-panel flex flex-wrap items-center gap-3 rounded-full border border-slate/15 px-4 py-2.5">
+      <span className="relative flex h-2.5 w-2.5">
+        {live && (
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-onair opacity-60" />
+        )}
+        <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${live ? "bg-onair" : "bg-slate"}`} />
+      </span>
       <span className="font-mono text-sm tracking-widest text-paper/70">
         {live ? "ON AIR" : "STANDBY"}
       </span>
@@ -35,7 +35,7 @@ export default function Timer({
         / {Math.floor(targetSeconds / 60)}:{pad(targetSeconds % 60)} min
       </span>
       {reachedTarget && (
-        <span className="rounded-full bg-good/20 px-2 py-0.5 font-mono text-xs text-good">
+        <span className="rounded-full bg-good/15 px-2 py-0.5 font-mono text-xs text-good">
           floor met
         </span>
       )}

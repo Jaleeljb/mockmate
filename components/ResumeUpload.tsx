@@ -35,15 +35,20 @@ export default function ResumeUpload({
   return (
     <div className="mx-auto w-full max-w-xl animate-rise">
       <div className="mb-8">
-        <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-amber">
-          Studio 15 · Session Setup
-        </p>
-        <h1 className="font-display text-4xl font-medium leading-tight text-paper sm:text-5xl">
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/5 px-3 py-1">
+          <span className="h-1.5 w-1.5 rounded-full bg-onair animate-pulseRec" />
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-amber">
+            Studio 15 · Session Setup
+          </p>
+        </div>
+        <h1 className="font-display text-4xl font-medium leading-[1.05] text-paper sm:text-6xl">
           Upload your resume,
           <br />
-          walk in prepared.
+          <span className="bg-gradient-to-r from-amber via-[#f0c98a] to-amber bg-clip-text text-transparent text-glow">
+            walk in prepared.
+          </span>
         </h1>
-        <p className="mt-4 max-w-md text-paper/60">
+        <p className="mt-5 max-w-md text-paper/60">
           We read your resume right in this browser tab — nothing is uploaded to a
           server. Your interviewer will ask about the roles, skills, and companies
           actually on your page.
@@ -62,8 +67,10 @@ export default function ResumeUpload({
           const file = e.dataTransfer.files?.[0];
           if (file) handleFile(file);
         }}
-        className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-14 text-center transition-colors ${
-          dragging ? "border-amber bg-amber/5" : "border-slate/50 bg-panel/50"
+        className={`glass-panel flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-14 text-center transition-all duration-300 ${
+          dragging
+            ? "border-amber shadow-[0_0_0_1px_rgba(227,168,87,0.4),0_30px_60px_-20px_rgba(227,168,87,0.25)] scale-[1.01]"
+            : "border-slate/40 hover:border-slate/70"
         }`}
       >
         <input
@@ -76,8 +83,12 @@ export default function ResumeUpload({
             if (file) handleFile(file);
           }}
         />
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber/15 text-amber">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <div
+          className={`mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber/15 text-amber shadow-[0_0_30px_-6px_rgba(227,168,87,0.5)] transition-transform duration-300 ${
+            dragging ? "scale-110" : ""
+          } ${loading ? "animate-pulseRec" : ""}`}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path
               d="M12 16V4M12 4L7 9M12 4l5 5M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"
               stroke="currentColor"
@@ -93,23 +104,25 @@ export default function ResumeUpload({
           <>
             <p className="font-medium text-paper">
               Drop your resume here, or{" "}
-              <span className="text-amber underline underline-offset-2">browse files</span>
+              <span className="text-amber underline underline-offset-4 decoration-amber/40">
+                browse files
+              </span>
             </p>
-            <p className="mt-2 font-mono text-xs text-paper/40">PDF, DOCX, or TXT</p>
+            <p className="mt-2 font-mono text-xs text-paper/40">PDF · DOCX · TXT</p>
           </>
         )}
       </label>
 
       {error && (
-        <p className="mt-4 rounded-lg border border-onair/30 bg-onair/10 px-4 py-3 text-sm text-onair">
+        <p className="mt-4 rounded-lg border border-onair/30 bg-onair/10 px-4 py-3 text-sm text-onair animate-rise">
           {error}
         </p>
       )}
 
       <div className="mt-8 flex items-center gap-3 text-xs text-paper/40">
-        <span className="h-px flex-1 bg-slate/30" />
+        <span className="h-px flex-1 bg-gradient-to-r from-transparent via-slate/40 to-slate/40" />
         <span className="font-mono uppercase tracking-wide">runs fully in your browser</span>
-        <span className="h-px flex-1 bg-slate/30" />
+        <span className="h-px flex-1 bg-gradient-to-l from-transparent via-slate/40 to-slate/40" />
       </div>
     </div>
   );

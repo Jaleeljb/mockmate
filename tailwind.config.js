@@ -30,6 +30,10 @@ module.exports = {
           "0%": { opacity: "0", transform: "translateY(8px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        floaty: {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "50%": { transform: "translate(20px, -24px) scale(1.06)" },
+        },
       },
       animation: {
         pulseRec: "pulseRec 1.6s ease-in-out infinite",
