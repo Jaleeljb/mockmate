@@ -43,7 +43,7 @@ export default function BriefingScreen({
                 </span>
               ))
             ) : (
-              <span className="text-xs text-paper/40">None detected — we'll keep it behavioral.</span>
+              <span className="text-xs text-paper/40">None detected — we&apos;ll keep it behavioral.</span>
             )}
           </div>
         </div>

@@ -20,7 +20,7 @@ export default function SummaryScreen({
         Studio 15 · Session Report
       </p>
       <h1 className="font-display text-3xl font-medium text-paper sm:text-4xl">
-        That's a wrap.
+        That&apos;s a wrap.
       </h1>
       <p className="mt-3 text-paper/60">
         This read-out is generated from your own answers — pacing, length, and word
