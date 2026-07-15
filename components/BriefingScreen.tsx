@@ -21,10 +21,6 @@ export default function BriefingScreen({
 
   return (
     <div className="mx-auto w-full max-w-2xl animate-rise">
-      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/5 px-3 py-1">
-        <span className="h-1.5 w-1.5 rounded-full bg-amber" />
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-amber">Studio 15 · Pre-Roll</p>
-      </div>
       <h1 className="font-display text-3xl font-medium text-paper sm:text-4xl">
         {profile.name ? `Ready when you are, ${profile.name.split(" ")[0]}.` : "Ready when you are."}
       </h1>

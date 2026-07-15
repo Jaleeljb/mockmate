@@ -16,10 +16,6 @@ export default function SummaryScreen({
 
   return (
     <div className="mx-auto w-full max-w-3xl animate-rise pb-16">
-      <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-good/30 bg-good/5 px-3 py-1">
-        <span className="h-1.5 w-1.5 rounded-full bg-good" />
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-good">Studio 15 · Session Report</p>
-      </div>
       <h1 className="font-display text-3xl font-medium text-paper sm:text-4xl">That&apos;s a wrap.</h1>
       <p className="mt-3 max-w-xl text-paper/60">
         This read-out is generated from your own answers — pacing, length, and word

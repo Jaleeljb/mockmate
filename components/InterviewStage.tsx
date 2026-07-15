@@ -193,7 +193,7 @@ export default function InterviewStage({
 
       <ProgressRail plan={questions} currentIndex={currentIndex} />
 
-      <div className="viewfinder glass-panel rounded-2xl border border-slate/15 p-6 sm:p-8">
+      <div className="glass-panel rounded-2xl border border-slate/15 p-6 sm:p-8">
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber">
           Question {currentIndex + 1} of {questions.length} · {currentQuestion.category}
         </p>

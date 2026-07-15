@@ -8,13 +8,25 @@ import InterviewStage from "./InterviewStage";
 import SummaryScreen from "./SummaryScreen";
 import StudioGlow from "./StudioGlow";
 import NavBar from "./NavBar";
-import AboutSection from "./AboutSection";
+import HeroSection from "./HeroSection";
+import MarqueeStrip from "./MarqueeStrip";
+import StatsRow from "./StatsRow";
+import FeaturesGrid from "./FeaturesGrid";
+import HowItWorksSection from "./HowItWorksSection";
+import ClosingCTA from "./ClosingCTA";
 import FAQSection from "./FAQSection";
 import ContactSection from "./ContactSection";
 import Footer from "./Footer";
 import { buildInterviewPlan } from "@/lib/interviewEngine";
 
 type AppPhase = "upload" | "briefing" | "session" | "summary";
+
+const PANEL_EYEBROW: Record<AppPhase, string> = {
+  upload: "Try it now",
+  briefing: "Pre-roll",
+  session: "On air",
+  summary: "Session report",
+};
 
 export default function InterviewApp() {
   const [phase, setPhase] = useState<AppPhase>("upload");
@@ -82,17 +94,29 @@ export default function InterviewApp() {
       <NavBar phase={phase} onExit={handleRestart} />
 
       <div className="relative z-10">
-        <main id="practice" className="px-5 py-14 sm:px-10 sm:py-20">
-          {content}
-        </main>
+        {isLanding && (
+          <>
+            <HeroSection />
+            <MarqueeStrip />
+          </>
+        )}
+
+        <section id="practice" className="mx-auto max-w-3xl px-5 py-16 sm:px-10">
+          <div className="viewfinder rounded-3xl border border-slate/15 bg-panel/25 p-6 backdrop-blur-sm sm:p-10">
+            <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-amber">
+              Studio 15 · {PANEL_EYEBROW[phase]}
+            </p>
+            {content}
+          </div>
+        </section>
 
         {isLanding && (
           <>
-            <div className="mx-auto h-px max-w-5xl bg-gradient-to-r from-transparent via-slate/20 to-transparent" />
-            <AboutSection />
-            <div className="mx-auto h-px max-w-5xl bg-gradient-to-r from-transparent via-slate/20 to-transparent" />
+            <StatsRow />
+            <FeaturesGrid />
+            <HowItWorksSection />
             <FAQSection />
-            <div className="mx-auto h-px max-w-5xl bg-gradient-to-r from-transparent via-slate/20 to-transparent" />
+            <ClosingCTA />
             <ContactSection />
           </>
         )}

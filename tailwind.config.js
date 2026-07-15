@@ -36,10 +36,16 @@ module.exports = {
           "0%, 100%": { transform: "translate(0, 0) scale(1)" },
           "50%": { transform: "translate(20px, -24px) scale(1.06)" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         pulseRec: "pulseRec 1.6s ease-in-out infinite",
         rise: "rise 0.4s ease-out",
+        floaty: "floaty 16s ease-in-out infinite",
+        marquee: "marquee 26s linear infinite",
       },
     },
   },

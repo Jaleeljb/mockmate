@@ -26,8 +26,8 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToId("about")} className="hover:text-amber">
-                  About
+                <button onClick={() => scrollToId("features")} className="hover:text-amber">
+                  Features
                 </button>
               </li>
               <li>

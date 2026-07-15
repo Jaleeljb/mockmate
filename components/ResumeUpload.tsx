@@ -34,24 +34,10 @@ export default function ResumeUpload({
 
   return (
     <div className="mx-auto w-full max-w-xl animate-rise">
-      <div className="mb-8">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/5 px-3 py-1">
-          <span className="h-1.5 w-1.5 rounded-full bg-onair animate-pulseRec" />
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-amber">
-            Studio 15 · Session Setup
-          </p>
-        </div>
-        <h1 className="font-display text-4xl font-medium leading-[1.05] text-paper sm:text-6xl">
-          Upload your resume,
-          <br />
-          <span className="bg-gradient-to-r from-amber via-[#EFE0B8] to-amber bg-clip-text text-transparent text-glow">
-            walk in prepared.
-          </span>
-        </h1>
-        <p className="mt-5 max-w-md text-paper/60">
-          We read your resume right in this browser tab — nothing is uploaded to a
-          server. Your interviewer will ask about the roles, skills, and companies
-          actually on your page.
+      <div className="mb-6 text-center">
+        <p className="font-display text-xl font-medium text-paper">Drop your resume to begin</p>
+        <p className="mt-2 text-sm text-paper/50">
+          Parsed right here in your browser tab — never uploaded to a server.
         </p>
       </div>
 
