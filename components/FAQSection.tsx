@@ -5,7 +5,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Why is there no AI grading my answers?",
-    a: "Studio 15 deliberately avoids calling an external AI model to judge correctness — that keeps the tool fast, free to run, and private. Instead, the session report scores pacing, answer length, and filler-word usage: things you can act on immediately.",
+    a: "onemock deliberately avoids calling an external AI model to judge correctness — that keeps the tool fast, free to run, and private. Instead, the session report scores pacing, answer length, and filler-word usage: things you can act on immediately.",
   },
   {
     q: "What if my browser doesn't support voice input?",
@@ -28,7 +28,7 @@ const FAQS: { q: string; a: string }[] = [
 export default function FAQSection() {
   return (
     <section id="faq" className="mx-auto max-w-3xl px-5 py-24 sm:px-10">
-      <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-amber">Common questions</p>
+      <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-signal">Common questions</p>
       <h2 className="font-serif text-3xl italic leading-tight text-paper sm:text-4xl">
         Before you press record.
       </h2>
@@ -37,15 +37,15 @@ export default function FAQSection() {
         {FAQS.map((item) => (
           <details
             key={item.q}
-            className="glass-panel group rounded-xl border border-slate/15 p-5 open:border-amber/30"
+            className="glass-surface group rounded-xl border border-mist/15 p-5 open:border-signal/30"
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
               <span className="font-display text-base font-medium text-paper">{item.q}</span>
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate/25 text-paper/50 transition-transform duration-300 group-open:rotate-45 group-open:border-amber/50 group-open:text-amber">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-mist/25 text-paper/50 transition-transform duration-300 group-open:rotate-45 group-open:border-signal/50 group-open:text-signal">
                 +
               </span>
             </summary>
-            <p className="mt-3 border-t border-slate/15 pt-3 text-sm leading-relaxed text-paper/60">
+            <p className="mt-3 border-t border-mist/15 pt-3 text-sm leading-relaxed text-paper/60">
               {item.a}
             </p>
           </details>

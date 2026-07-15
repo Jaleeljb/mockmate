@@ -212,8 +212,8 @@ export default function InterviewStage({
 
       <ProgressRail plan={questions} currentIndex={currentIndex} />
 
-      <div className="glass-panel rounded-2xl border border-slate/15 p-6 sm:p-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber">
+      <div className="glass-surface rounded-2xl border border-mist/15 p-6 sm:p-8">
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-signal">
           Question {currentIndex + 1} of {questions.length} · {currentQuestion.category}
         </p>
         <h2 className="mt-3 font-display text-2xl font-medium leading-snug text-paper sm:text-3xl">
@@ -235,7 +235,7 @@ export default function InterviewStage({
           onChange={(e) => setTranscript(e.target.value)}
           placeholder="Your answer will appear here as you speak — or just type it directly."
           rows={5}
-          className="mt-4 w-full rounded-xl border border-slate/30 bg-ink/40 p-4 text-paper placeholder:text-paper/30 transition-colors focus:border-amber/60 focus:bg-ink/60 focus:outline-none focus:ring-1 focus:ring-amber/30"
+          className="mt-4 w-full rounded-xl border border-mist/30 bg-void/40 p-4 text-paper placeholder:text-paper/30 transition-colors focus:border-signal/60 focus:bg-void/60 focus:outline-none focus:ring-1 focus:ring-signal/30"
         />
 
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
@@ -264,14 +264,14 @@ export default function InterviewStage({
                     setMicActive(Boolean(handle));
                   }
                 }}
-                className="rounded-full border border-slate/40 px-4 py-2 text-xs text-paper/70 hover:border-slate"
+                className="rounded-full border border-mist/40 px-4 py-2 text-xs text-paper/70 hover:border-mist"
               >
                 {micActive ? "Pause mic" : "Resume mic"}
               </button>
             )}
             <button
               onClick={finishAnswer}
-              className="rounded-full bg-amber px-5 py-2 text-sm font-medium text-ink shadow-[0_6px_20px_-6px_rgba(201,166,107,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_10px_28px_-6px_rgba(201,166,107,0.75)]"
+              className="rounded-full bg-signal px-5 py-2 text-sm font-medium text-void shadow-[0_6px_20px_-6px_rgba(139,124,255,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_10px_28px_-6px_rgba(139,124,255,0.75)]"
             >
               {currentIndex >= questions.length - 1 ? "Finish interview" : "Next question →"}
             </button>

@@ -12,8 +12,8 @@ const CATEGORY_LABEL: Record<QuestionCategory, string> = {
 };
 
 const STATUS_STYLE: Record<AnswerStatus, { label: string; dot: string; text: string }> = {
-  skipped: { label: "Skipped", dot: "bg-onair", text: "text-onair" },
-  brief: { label: "Brief", dot: "bg-amber", text: "text-amber" },
+  skipped: { label: "Skipped", dot: "bg-rec", text: "text-rec" },
+  brief: { label: "Brief", dot: "bg-signal", text: "text-signal" },
   solid: { label: "Answered", dot: "bg-good", text: "text-good" },
 };
 
@@ -52,14 +52,14 @@ export default function SummaryScreen({
       </div>
 
       {nothingAnswered ? (
-        <div className="glass-panel mt-8 rounded-xl border border-onair/30 bg-onair/5 p-5">
-          <p className="font-mono text-[10px] uppercase tracking-wide text-onair">No answers captured</p>
+        <div className="glass-surface mt-8 rounded-xl border border-rec/30 bg-rec/5 p-5">
+          <p className="font-mono text-[10px] uppercase tracking-wide text-rec">No answers captured</p>
           <p className="mt-2 text-sm text-paper/70">{feedback.improvements[0]}</p>
         </div>
       ) : (
         <>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            <div className="glass-panel rounded-xl border border-good/25 p-5">
+            <div className="glass-surface rounded-xl border border-good/25 p-5">
               <p className="font-mono text-[10px] uppercase tracking-wide text-good">Where you were strong</p>
               <ul className="mt-3 space-y-3">
                 {feedback.strengths.map((note, i) => (
@@ -71,13 +71,13 @@ export default function SummaryScreen({
               </ul>
             </div>
 
-            <div className="glass-panel rounded-xl border border-amber/25 p-5">
-              <p className="font-mono text-[10px] uppercase tracking-wide text-amber">Where to improve</p>
+            <div className="glass-surface rounded-xl border border-signal/25 p-5">
+              <p className="font-mono text-[10px] uppercase tracking-wide text-signal">Where to improve</p>
               {feedback.improvements.length ? (
                 <ul className="mt-3 space-y-3">
                   {feedback.improvements.map((note, i) => (
                     <li key={i} className="flex gap-3 text-sm text-paper/80">
-                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber" />
+                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-signal" />
                       {note}
                     </li>
                   ))}
@@ -91,7 +91,7 @@ export default function SummaryScreen({
           </div>
 
           {feedback.categoryBreakdown.length > 1 && (
-            <div className="glass-panel mt-6 rounded-xl border border-slate/15 p-5">
+            <div className="glass-surface mt-6 rounded-xl border border-mist/15 p-5">
               <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">By question type</p>
               <div className="mt-4 space-y-4">
                 {feedback.categoryBreakdown.map((cat) => {
@@ -105,9 +105,9 @@ export default function SummaryScreen({
                           {cat.answered}/{cat.total} answered · {cat.averageWords || 0}w avg
                         </span>
                       </div>
-                      <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-ink/50">
+                      <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-void/50">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-amber to-goldLight"
+                          className="h-full rounded-full bg-gradient-to-r from-signal to-signalLight"
                           style={{ width: `${widthPct}%` }}
                         />
                       </div>
@@ -128,12 +128,12 @@ export default function SummaryScreen({
             return (
               <details
                 key={answer.questionId}
-                className="glass-panel group rounded-xl border border-slate/15 p-4 transition-colors open:border-amber/40"
+                className="glass-surface group rounded-xl border border-mist/15 p-4 transition-colors open:border-signal/40"
               >
                 <summary className="cursor-pointer list-none">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wide text-amber">
+                      <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wide text-signal">
                         <span>
                           {i + 1} · {answer.category}
                         </span>
@@ -149,9 +149,9 @@ export default function SummaryScreen({
                     </span>
                   </div>
                 </summary>
-                <p className="mt-3 border-t border-slate/20 pt-3 text-sm text-paper/70">
+                <p className="mt-3 border-t border-mist/20 pt-3 text-sm text-paper/70">
                   {answer.status === "skipped" ? (
-                    <span className="italic text-onair/70">
+                    <span className="italic text-rec/70">
                       No answer was captured for this question — it was left blank.
                     </span>
                   ) : (
@@ -166,7 +166,7 @@ export default function SummaryScreen({
 
       <button
         onClick={onRestart}
-        className="mt-10 rounded-full border border-slate/40 px-6 py-3 text-sm text-paper/70 transition-all hover:border-amber hover:text-amber hover:shadow-[0_8px_24px_-8px_rgba(201,166,107,0.4)]"
+        className="mt-10 rounded-full border border-mist/40 px-6 py-3 text-sm text-paper/70 transition-all hover:border-signal hover:text-signal hover:shadow-[0_8px_24px_-8px_rgba(139,124,255,0.4)]"
       >
         Run another session
       </button>
@@ -176,7 +176,7 @@ export default function SummaryScreen({
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="glass-panel rounded-xl border border-slate/15 p-4">
+    <div className="glass-surface rounded-xl border border-mist/15 p-4">
       <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">{label}</p>
       <p className="mt-1 bg-gradient-to-br from-paper to-paper/70 bg-clip-text font-display text-2xl text-transparent">
         {value}

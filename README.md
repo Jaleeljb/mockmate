@@ -1,4 +1,4 @@
-# Studio 15 — Mock Interview Practice
+# onemock — Mock Interview Practice
 
 A responsive, resume-aware mock interview app that runs a **live, timed session
 of at least 15 minutes**, entirely in the browser.
