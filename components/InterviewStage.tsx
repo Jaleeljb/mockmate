@@ -148,13 +148,32 @@ export default function InterviewStage({
     };
     answersRef.current = [...answersRef.current, record];
 
-    const isLastPlanned = currentIndex >= questions.length - 1;
+    // The closing question is always the true final question — once it's
+    // answered, the interview ends, no exceptions.
+    if (currentQuestion.category === "closing") {
+      setFinishing(true);
+      cancelSpeech();
+      onComplete(answersRef.current, elapsedSeconds);
+      return;
+    }
 
-    if (isLastPlanned && elapsedSeconds < MIN_INTERVIEW_SECONDS) {
+    const isLastPlanned = currentIndex >= questions.length - 1;
+    const nextQuestion = questions[currentIndex + 1];
+    const nextIsClosing = nextQuestion?.category === "closing";
+
+    // Running under the 15-minute floor with only the closing question left
+    // (or nothing left at all) — insert a filler question ahead of the
+    // closing question so it still lands last.
+    if ((isLastPlanned || nextIsClosing) && elapsedSeconds < MIN_INTERVIEW_SECONDS) {
       const filler = getFillerQuestion(usedIdsRef.current);
       if (filler) {
         usedIdsRef.current.add(filler.id);
-        setQuestions((prev) => [...prev, filler]);
+        setQuestions((prev) => {
+          const insertAt = nextIsClosing ? currentIndex + 1 : prev.length;
+          const next = [...prev];
+          next.splice(insertAt, 0, filler);
+          return next;
+        });
         setCurrentIndex((i) => i + 1);
         return;
       }
@@ -169,7 +188,7 @@ export default function InterviewStage({
 
     setCurrentIndex((i) => i + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentQuestion, currentIndex, questions.length, elapsedSeconds, transcript, onComplete, stopRecognition]);
+  }, [currentQuestion, currentIndex, questions, elapsedSeconds, transcript, onComplete, stopRecognition]);
 
   useEffect(() => {
     finishAnswerRef.current = finishAnswer;

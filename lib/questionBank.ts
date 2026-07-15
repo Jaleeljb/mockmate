@@ -11,13 +11,14 @@ function q(
   return { id: `${category}-${counter}`, category, text, minAnswerSeconds, maxAnswerSeconds };
 }
 
+// Always asked first, verbatim — the standard interview opener.
 export const OPENING_POOL: InterviewQuestion[] = [
-  q("opening", "To start, walk me through your background and what's brought you to this interview today.", 60, 150),
+  q("opening", "Tell me about yourself.", 60, 150),
 ];
 
+// Always asked last, verbatim — gives the candidate the floor before wrapping up.
 export const CLOSING_POOL: InterviewQuestion[] = [
-  q("closing", "Last question — where do you want to be in your career three years from now, and what are you doing to get there?", 45, 120),
-  q("closing", "Before we wrap up, is there anything about your experience we haven't covered that you think is important for me to know?", 30, 120),
+  q("closing", "Do you have any questions for me?", 30, 150),
 ];
 
 export const BEHAVIORAL_POOL: InterviewQuestion[] = [
@@ -33,6 +34,8 @@ export const BEHAVIORAL_POOL: InterviewQuestion[] = [
   q("behavioral", "Describe the most complex problem you've solved recently and how you approached it.", 60, 150),
   q("behavioral", "Tell me about a time you had to say no to a request. How did you handle that conversation?", 45, 120),
   q("behavioral", "What's a mistake you made that you're comfortable sharing, and how did you fix it?", 45, 120),
+  q("behavioral", "Where do you want to be in your career three years from now, and what are you doing to get there?", 45, 120),
+  q("behavioral", "Is there anything about your experience we haven't covered that you think is important for me to know?", 30, 120),
 ];
 
 export const GENERIC_TECHNICAL_POOL: InterviewQuestion[] = [
