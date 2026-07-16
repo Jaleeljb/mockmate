@@ -53,10 +53,10 @@ export default function ResumeUpload({
           const file = e.dataTransfer.files?.[0];
           if (file) handleFile(file);
         }}
-        className={`glass-panel flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-14 text-center transition-all duration-300 ${
+        className={`glass-surface flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-14 text-center transition-all duration-300 ${
           dragging
-            ? "border-amber shadow-[0_0_0_1px_rgba(201,166,107,0.4),0_30px_60px_-20px_rgba(201,166,107,0.25)] scale-[1.01]"
-            : "border-slate/40 hover:border-slate/70"
+            ? "border-signal shadow-[0_0_0_1px_rgba(139,124,255,0.4),0_30px_60px_-20px_rgba(139,124,255,0.25)] scale-[1.01]"
+            : "border-mist/40 hover:border-mist/70"
         }`}
       >
         <input
@@ -70,7 +70,7 @@ export default function ResumeUpload({
           }}
         />
         <div
-          className={`mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber/15 text-amber shadow-[0_0_30px_-6px_rgba(201,166,107,0.5)] transition-transform duration-300 ${
+          className={`mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-signal/15 text-signal shadow-[0_0_30px_-6px_rgba(139,124,255,0.5)] transition-transform duration-300 ${
             dragging ? "scale-110" : ""
           } ${loading ? "animate-pulseRec" : ""}`}
         >
@@ -90,7 +90,7 @@ export default function ResumeUpload({
           <>
             <p className="font-medium text-paper">
               Drop your resume here, or{" "}
-              <span className="text-amber underline underline-offset-4 decoration-amber/40">
+              <span className="text-signal underline underline-offset-4 decoration-signal/40">
                 browse files
               </span>
             </p>
@@ -100,15 +100,15 @@ export default function ResumeUpload({
       </label>
 
       {error && (
-        <p className="mt-4 rounded-lg border border-onair/30 bg-onair/10 px-4 py-3 text-sm text-onair animate-rise">
+        <p className="mt-4 rounded-lg border border-rec/30 bg-rec/10 px-4 py-3 text-sm text-rec animate-rise">
           {error}
         </p>
       )}
 
       <div className="mt-8 flex items-center gap-3 text-xs text-paper/40">
-        <span className="h-px flex-1 bg-gradient-to-r from-transparent via-slate/40 to-slate/40" />
+        <span className="h-px flex-1 bg-gradient-to-r from-transparent via-mist/40 to-mist/40" />
         <span className="font-mono uppercase tracking-wide">runs fully in your browser</span>
-        <span className="h-px flex-1 bg-gradient-to-l from-transparent via-slate/40 to-slate/40" />
+        <span className="h-px flex-1 bg-gradient-to-l from-transparent via-mist/40 to-mist/40" />
       </div>
     </div>
   );

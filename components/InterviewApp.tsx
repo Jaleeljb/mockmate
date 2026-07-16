@@ -6,7 +6,7 @@ import ResumeUpload from "./ResumeUpload";
 import BriefingScreen from "./BriefingScreen";
 import InterviewStage from "./InterviewStage";
 import SummaryScreen from "./SummaryScreen";
-import StudioGlow from "./StudioGlow";
+import AmbientField from "./AmbientField";
 import NavBar from "./NavBar";
 import HeroSection from "./HeroSection";
 import MarqueeStrip from "./MarqueeStrip";
@@ -71,14 +71,7 @@ export default function InterviewApp() {
       );
     }
     if (phase === "session") {
-      return (
-        <InterviewStage
-          key={sessionKey}
-          profile={profile}
-          initialPlan={plan}
-          onComplete={handleComplete}
-        />
-      );
+      return <InterviewStage key={sessionKey} initialPlan={plan} onComplete={handleComplete} />;
     }
     if (phase === "summary" && result) {
       return (
@@ -97,7 +90,7 @@ export default function InterviewApp() {
 
   return (
     <div className="relative">
-      <StudioGlow />
+      <AmbientField />
       <NavBar phase={phase} onExit={handleRestart} />
 
       <div className="relative z-10">
@@ -109,9 +102,9 @@ export default function InterviewApp() {
         )}
 
         <section id="practice" className="mx-auto max-w-3xl px-5 py-16 sm:px-10">
-          <div className="viewfinder rounded-3xl border border-slate/15 bg-panel/25 p-6 backdrop-blur-sm sm:p-10">
-            <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-amber">
-              Studio 15 · {PANEL_EYEBROW[phase]}
+          <div className="viewfinder rounded-3xl border border-mist/15 bg-surface/25 p-6 backdrop-blur-sm sm:p-10">
+            <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-signal">
+              onemock · {PANEL_EYEBROW[phase]}
             </p>
             {content}
           </div>

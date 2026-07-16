@@ -57,109 +57,6 @@ function extractRoles(text: string): string[] {
   return Array.from(found).slice(0, 6);
 }
 
-const ACTION_VERBS = [
-  "led", "built", "designed", "implemented", "launched", "migrated", "automated",
-  "optimized", "reduced", "increased", "managed", "architected", "spearheaded",
-  "developed", "created", "delivered", "improved", "drove", "scaled", "owned",
-  "streamlined", "mentored", "shipped", "refactored", "negotiated", "grew",
-];
-
-const PROJECT_KEYWORDS =
-  "platform|system|tool|application|app|dashboard|pipeline|engine|service|framework|library|portal|integration";
-
-/**
- * Pairs each detected role with the nearest "at <Company>" mention in the
- * surrounding text (checked forward and backward within a small window),
- * so resume-grounded questions can reference a real role+company combo
- * instead of treating roles and companies as unrelated lists.
- */
-function extractRoleCompanyPairs(text: string): { role: string; company: string | null }[] {
-  const WINDOW = 220;
-  const companyMatches: { name: string; index: number }[] = [];
-  const atPattern = /\bat\s+([A-Z][A-Za-z0-9&.,'\- ]{2,40})(?=[\n,.]| \d{4}| -| –)/g;
-  let cm: RegExpExecArray | null;
-  while ((cm = atPattern.exec(text)) !== null) {
-    companyMatches.push({ name: cm[1].trim(), index: cm.index });
-  }
-
-  const pairs: { role: string; company: string | null }[] = [];
-  const seen = new Set<string>();
-
-  for (const pattern of ROLE_PATTERNS) {
-    const re = new RegExp(pattern.source, pattern.flags.includes("g") ? pattern.flags : pattern.flags + "g");
-    let rm: RegExpExecArray | null;
-    while ((rm = re.exec(text)) !== null) {
-      const roleText = rm[0].trim().replace(/\s+/g, " ");
-      if (roleText.length <= 3) continue;
-      const followingChar = text[rm.index + rm[0].length];
-      if (followingChar && /[a-zA-Z]/.test(followingChar)) continue;
-
-      let nearest: { name: string; distance: number } | null = null;
-      for (const c of companyMatches) {
-        const distance = Math.abs(c.index - rm.index);
-        if (distance <= WINDOW && (!nearest || distance < nearest.distance)) {
-          nearest = { name: c.name, distance };
-        }
-      }
-
-      const key = `${roleText.toLowerCase()}|${nearest?.name ?? ""}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      pairs.push({ role: roleText, company: nearest?.name ?? null });
-    }
-  }
-
-  return pairs.slice(0, 8);
-}
-
-/**
- * Finds sentence/bullet-like fragments that read as concrete accomplishments:
- * either they open with a strong action verb, or they contain a number/metric
- * (%, x-multiplier, or a count). These ground follow-up questions in specifics
- * the candidate actually wrote rather than generic prompts.
- */
-function extractHighlights(text: string): string[] {
-  const rawLines = text
-    .split(/\n|(?<=[.!?])\s+(?=[A-Z•\-])/)
-    .map((l) => l.replace(/^[•\-*\u2022]\s*/, "").trim())
-    .filter((l) => l.length >= 25 && l.length <= 220);
-
-  const hasMetric = /\b\d+(\.\d+)?\s?(%|percent|x\b|k\b|m\b|million|billion|users|customers|hours|days|weeks|months)/i;
-  const startsWithVerb = new RegExp(`^(${ACTION_VERBS.join("|")})\\b`, "i");
-
-  const found = new Set<string>();
-  for (const line of rawLines) {
-    if (hasMetric.test(line) || startsWithVerb.test(line)) {
-      found.add(line);
-    }
-    if (found.size >= 10) break;
-  }
-  return Array.from(found).slice(0, 8);
-}
-
-function extractProjects(text: string): string[] {
-  const found = new Set<string>();
-
-  const labelPattern = /[Pp]roject\s*[:\-]\s*([A-Z][A-Za-z0-9&'.]*(?:\s+[A-Z][A-Za-z0-9&'.]*){0,4})/g;
-  let m: RegExpExecArray | null;
-  while ((m = labelPattern.exec(text)) !== null) {
-    found.add(m[1].trim());
-  }
-
-  const namedPattern = new RegExp(
-    `\\b([A-Z][A-Za-z0-9]*(?:\\s[A-Z][A-Za-z0-9]*){0,3})\\s(?:${PROJECT_KEYWORDS})\\b`,
-    "g"
-  );
-  while ((m = namedPattern.exec(text)) !== null) {
-    const name = m[1].trim();
-    if (name.split(" ").length <= 4 && !/^(The|A|An|This|Our)$/i.test(name)) {
-      found.add(name);
-    }
-  }
-
-  return Array.from(found).slice(0, 6);
-}
-
 function extractCompanies(text: string): string[] {
   // Heuristic: capitalized multi-word sequences near "at" / preceding a date range,
   // filtered against a short stoplist of common resume section headers.
@@ -215,9 +112,6 @@ export function analyzeResumeText(rawText: string): ResumeProfile {
     companies: extractCompanies(rawText),
     yearsOfExperience: extractYearsOfExperience(rawText),
     education: extractEducation(rawText),
-    rolesWithCompanies: extractRoleCompanyPairs(rawText),
-    highlights: extractHighlights(rawText),
-    projects: extractProjects(rawText),
   };
 }
 

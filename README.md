@@ -1,4 +1,4 @@
-# Studio 15 — Mock Interview Practice
+# onemock — Mock Interview Practice
 
 A responsive, resume-aware mock interview app that runs a **live, timed session
 of at least 15 minutes**, entirely in the browser.
@@ -11,16 +11,9 @@ and free to run, so the app stays light, fast, and has zero per-session cost:
 
 - **Resume parsing**: `pdfjs-dist` and `mammoth` run client-side to extract raw
   text from PDF/DOCX/TXT — nothing is uploaded to a server.
-- **Question selection**: `lib/resumeParser.ts` scans the resume text for
-  skills, job titles, companies (paired to the role they belong to), years of
-  experience, education, named projects, and metric/action-verb "highlights."
-  `lib/realtimeEngine.ts` then generates each question **live, one at a time**,
-  during the session itself: after every answer it re-scans what the
-  candidate just said for an un-asked resume keyword and asks a targeted
-  follow-up if it finds one, otherwise it pulls the next un-asked
-  resume-grounded topic, and only falls back to the shared behavioral/
-  technical pools once resume material runs out. Every question is
-  deduplicated for the session, so nothing repeats.
+- **Question selection**: a hand-built question bank + keyword/regex matching
+  against the resume text (skills, job titles, companies, years of experience,
+  education) assembles a personalized question plan.
 - **Voice**: the native **Web Speech API** — `SpeechSynthesis` reads each
   question aloud, `SpeechRecognition` transcribes the candidate's spoken
   answer live. Both run locally in supporting browsers (Chrome/Edge) with no
@@ -69,10 +62,9 @@ provision and no API keys to configure.
 app/                Next.js App Router entry (layout, page, global styles)
 components/         UI: upload, briefing, live session stage, summary report
 lib/
-  resumeParser.ts    Client-side PDF/DOCX/TXT text extraction + deep keyword/fact analysis
-  questionBank.ts    Static fallback pools (opening/behavioral/technical/closing)
-  realtimeEngine.ts  Generates each question live from the resume + running transcript, no repeats
-  interviewEngine.ts Builds a preview plan for the briefing screen, enforces the 15-minute floor
+  resumeParser.ts    Client-side PDF/DOCX/TXT text extraction + keyword analysis
+  questionBank.ts    Static question pools (opening/behavioral/technical/closing)
+  interviewEngine.ts Builds the resume-aware plan, enforces the 15-minute floor
   speechUtils.ts     Web Speech API wrappers (TTS + STT)
   feedback.ts        Rule-based post-interview scoring
 types/               Shared TypeScript types

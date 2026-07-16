@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { AnswerRecord, InterviewQuestion, ResumeProfile } from "@/types";
+import type { AnswerRecord, InterviewQuestion } from "@/types";
 import Timer from "./Timer";
 import Waveform from "./Waveform";
 import ProgressRail from "./ProgressRail";
@@ -15,29 +15,18 @@ import {
   startRecognition,
   type RecognitionHandle,
 } from "@/lib/speechUtils";
-import { MIN_INTERVIEW_SECONDS } from "@/lib/interviewEngine";
-import { CLOSING_POOL, OPENING_POOL } from "@/lib/questionBank";
-import { getNextQuestion } from "@/lib/realtimeEngine";
+import { MIN_INTERVIEW_SECONDS, getFillerQuestion } from "@/lib/interviewEngine";
 
 type StagePhase = "speaking" | "listening" | "paused";
 
 export default function InterviewStage({
-  profile,
   initialPlan,
   onComplete,
 }: {
-  profile: ResumeProfile;
   initialPlan: InterviewQuestion[];
   onComplete: (answers: AnswerRecord[], totalDurationSeconds: number) => void;
 }) {
-  // The session always opens on the standard opener. Every question after
-  // that is generated live, one at a time, by realtimeEngine.getNextQuestion —
-  // it reacts to what the candidate just said and to the resume, so nothing
-  // here is a fixed script. `initialPlan` is only used as a fallback opener
-  // in case the opening pool is ever empty.
-  const [questions, setQuestions] = useState<InterviewQuestion[]>([
-    OPENING_POOL[0] ?? initialPlan[0],
-  ]);
+  const [questions, setQuestions] = useState<InterviewQuestion[]>(initialPlan);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState<StagePhase>("speaking");
   const [transcript, setTranscript] = useState("");
@@ -47,8 +36,7 @@ export default function InterviewStage({
   const [finishing, setFinishing] = useState(false);
 
   const answersRef = useRef<AnswerRecord[]>([]);
-  const usedTextsRef = useRef<Set<string>>(new Set([OPENING_POOL[0]?.text].filter(Boolean) as string[]));
-  const usedKeywordsRef = useRef<Set<string>>(new Set());
+  const usedIdsRef = useRef<Set<string>>(new Set(initialPlan.map((q) => q.id)));
   const recognitionRef = useRef<RecognitionHandle | null>(null);
   const interimRef = useRef("");
   const finalRef = useRef("");
@@ -169,27 +157,38 @@ export default function InterviewStage({
       return;
     }
 
-    // Once the 15-minute floor is reached, the next question asked is always
-    // the closing question — otherwise ask the live engine for the next
-    // resume-aware question, grounded in the answer that was just given.
-    const readyToClose = elapsedSeconds >= MIN_INTERVIEW_SECONDS;
-    const closing = CLOSING_POOL[0];
+    const isLastPlanned = currentIndex >= questions.length - 1;
+    const nextQuestion = questions[currentIndex + 1];
+    const nextIsClosing = nextQuestion?.category === "closing";
 
-    const nextQuestion =
-      readyToClose && !usedTextsRef.current.has(closing.text)
-        ? closing
-        : getNextQuestion({
-            profile,
-            lastAnswer: record,
-            usedTexts: usedTextsRef.current,
-            usedKeywords: usedKeywordsRef.current,
-          });
+    // Running under the 15-minute floor with only the closing question left
+    // (or nothing left at all) — insert a filler question ahead of the
+    // closing question so it still lands last.
+    if ((isLastPlanned || nextIsClosing) && elapsedSeconds < MIN_INTERVIEW_SECONDS) {
+      const filler = getFillerQuestion(usedIdsRef.current);
+      if (filler) {
+        usedIdsRef.current.add(filler.id);
+        setQuestions((prev) => {
+          const insertAt = nextIsClosing ? currentIndex + 1 : prev.length;
+          const next = [...prev];
+          next.splice(insertAt, 0, filler);
+          return next;
+        });
+        setCurrentIndex((i) => i + 1);
+        return;
+      }
+    }
 
-    usedTextsRef.current.add(nextQuestion.text);
-    setQuestions((prev) => [...prev, nextQuestion]);
+    if (isLastPlanned) {
+      setFinishing(true);
+      cancelSpeech();
+      onComplete(answersRef.current, elapsedSeconds);
+      return;
+    }
+
     setCurrentIndex((i) => i + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentQuestion, elapsedSeconds, transcript, profile, onComplete, stopRecognition]);
+  }, [currentQuestion, currentIndex, questions, elapsedSeconds, transcript, onComplete, stopRecognition]);
 
   useEffect(() => {
     finishAnswerRef.current = finishAnswer;
@@ -213,9 +212,9 @@ export default function InterviewStage({
 
       <ProgressRail plan={questions} currentIndex={currentIndex} />
 
-      <div className="glass-panel rounded-2xl border border-slate/15 p-6 sm:p-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber">
-          Question {currentIndex + 1} · {currentQuestion.category}
+      <div className="glass-surface rounded-2xl border border-mist/15 p-6 sm:p-8">
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-signal">
+          Question {currentIndex + 1} of {questions.length} · {currentQuestion.category}
         </p>
         <h2 className="mt-3 font-display text-2xl font-medium leading-snug text-paper sm:text-3xl">
           {currentQuestion.text}
@@ -236,7 +235,7 @@ export default function InterviewStage({
           onChange={(e) => setTranscript(e.target.value)}
           placeholder="Your answer will appear here as you speak — or just type it directly."
           rows={5}
-          className="mt-4 w-full rounded-xl border border-slate/30 bg-ink/40 p-4 text-paper placeholder:text-paper/30 transition-colors focus:border-amber/60 focus:bg-ink/60 focus:outline-none focus:ring-1 focus:ring-amber/30"
+          className="mt-4 w-full rounded-xl border border-mist/30 bg-void/40 p-4 text-paper placeholder:text-paper/30 transition-colors focus:border-signal/60 focus:bg-void/60 focus:outline-none focus:ring-1 focus:ring-signal/30"
         />
 
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
@@ -265,16 +264,16 @@ export default function InterviewStage({
                     setMicActive(Boolean(handle));
                   }
                 }}
-                className="rounded-full border border-slate/40 px-4 py-2 text-xs text-paper/70 hover:border-slate"
+                className="rounded-full border border-mist/40 px-4 py-2 text-xs text-paper/70 hover:border-mist"
               >
                 {micActive ? "Pause mic" : "Resume mic"}
               </button>
             )}
             <button
               onClick={finishAnswer}
-              className="rounded-full bg-amber px-5 py-2 text-sm font-medium text-ink shadow-[0_6px_20px_-6px_rgba(201,166,107,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_10px_28px_-6px_rgba(201,166,107,0.75)]"
+              className="rounded-full bg-signal px-5 py-2 text-sm font-medium text-void shadow-[0_6px_20px_-6px_rgba(139,124,255,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_10px_28px_-6px_rgba(139,124,255,0.75)]"
             >
-              {currentQuestion.category === "closing" ? "Finish interview" : "Next question →"}
+              {currentIndex >= questions.length - 1 ? "Finish interview" : "Next question →"}
             </button>
           </div>
         </div>

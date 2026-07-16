@@ -19,7 +19,7 @@ export default function ProgressRail({
 }) {
   return (
     <div className="no-scrollbar relative flex gap-2 overflow-x-auto pb-1">
-      <div className="absolute left-0 right-0 top-1/2 -z-10 h-px bg-slate/15" aria-hidden />
+      <div className="absolute left-0 right-0 top-1/2 -z-10 h-px bg-mist/15" aria-hidden />
       {plan.map((question, i) => {
         const state = i < currentIndex ? "done" : i === currentIndex ? "current" : "upcoming";
         return (
@@ -28,10 +28,10 @@ export default function ProgressRail({
             title={`${CATEGORY_LABEL[question.category]} — ${question.text}`}
             className={`flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide backdrop-blur transition-colors duration-300 ${
               state === "current"
-                ? "border-amber bg-amber/10 text-amber shadow-[0_0_16px_-4px_rgba(201,166,107,0.6)]"
+                ? "border-signal bg-signal/10 text-signal shadow-[0_0_16px_-4px_rgba(139,124,255,0.6)]"
                 : state === "done"
-                ? "border-good/40 bg-ink/40 text-good/80"
-                : "border-slate/30 bg-ink/30 text-slate"
+                ? "border-good/40 bg-void/40 text-good/80"
+                : "border-mist/30 bg-void/30 text-mist"
             }`}
           >
             <span>{i + 1}</span>
