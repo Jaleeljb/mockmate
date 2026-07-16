@@ -87,13 +87,14 @@ export default function InterviewApp() {
   }, [phase, profile, plan, result, sessionKey]);
 
   const isLanding = phase === "upload";
+  const isSummary = phase === "summary";
 
   return (
-    <div className="relative">
+    <div className="relative flex min-h-screen flex-col">
       <AmbientField />
       <NavBar phase={phase} onExit={handleRestart} />
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-1 flex-col lg:min-h-0">
         {isLanding && (
           <>
             <HeroSection />
@@ -101,14 +102,20 @@ export default function InterviewApp() {
           </>
         )}
 
-        <section id="practice" className="mx-auto max-w-3xl px-5 py-16 sm:px-10">
-          <div className="viewfinder rounded-3xl border border-mist/15 bg-surface/25 p-6 backdrop-blur-sm sm:p-10">
-            <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-signal">
-              onemock · {PANEL_EYEBROW[phase]}
-            </p>
+        {isSummary ? (
+          <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-5 sm:px-8 sm:py-6 lg:min-h-0">
             {content}
-          </div>
-        </section>
+          </section>
+        ) : (
+          <section id="practice" className="mx-auto max-w-3xl px-5 py-16 sm:px-10">
+            <div className="viewfinder rounded-3xl border border-mist/15 bg-surface/25 p-6 backdrop-blur-sm sm:p-10">
+              <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-signal">
+                onemock · {PANEL_EYEBROW[phase]}
+              </p>
+              {content}
+            </div>
+          </section>
+        )}
 
         {isLanding && (
           <>
@@ -121,7 +128,7 @@ export default function InterviewApp() {
           </>
         )}
 
-        <Footer />
+        {!isSummary && <Footer />}
       </div>
     </div>
   );
