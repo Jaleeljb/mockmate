@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import type { InterviewQuestion, ResumeProfile } from "@/types";
 import { isSpeechRecognitionSupported, isSpeechSynthesisSupported } from "@/lib/speechUtils";
 import { MIN_INTERVIEW_SECONDS } from "@/lib/interviewEngine";
+import { buildResumeFacts, summarizeFacts } from "@/lib/resumeFacts";
 import InterviewerAvatar from "./InterviewerAvatar";
 
 export default function BriefingScreen({
@@ -19,6 +20,15 @@ export default function BriefingScreen({
 }) {
   const micSupported = useMemo(() => isSpeechRecognitionSupported(), []);
   const voiceSupported = useMemo(() => isSpeechSynthesisSupported(), []);
+  const factsSummary = useMemo(() => summarizeFacts(buildResumeFacts(profile)), [profile]);
+  const totalFacts =
+    factsSummary.skill +
+    factsSummary.project +
+    factsSummary.role +
+    factsSummary.experience_bullet +
+    factsSummary.certification +
+    factsSummary.education +
+    factsSummary.achievement;
 
   return (
     <div className="mx-auto w-full max-w-2xl animate-rise">
@@ -31,24 +41,43 @@ export default function BriefingScreen({
       <p className="mt-3 max-w-lg text-paper/60">
         This session runs at least {Math.round(MIN_INTERVIEW_SECONDS / 60)} minutes across{" "}
         {plan.length} questions, mixing intro, resume-specific, technical, and behavioral rounds.
+        {totalFacts > 0 && (
+          <>
+            {" "}
+            We pulled {totalFacts} distinct point{totalFacts === 1 ? "" : "s"} from your resume —{" "}
+            {factsSummary.skill} skill{factsSummary.skill === 1 ? "" : "s"}, {factsSummary.project} project
+            {factsSummary.project === 1 ? "" : "s"}, and {totalFacts - factsSummary.skill - factsSummary.project}{" "}
+            other detail{totalFacts - factsSummary.skill - factsSummary.project === 1 ? "" : "s"} — to draw
+            questions from.
+          </>
+        )}
       </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div
           className="glass-surface border border-mist/15 animate-rise rounded-xl p-4"
           style={{ animationDelay: "80ms", animationFillMode: "backwards" }}
         >
-          <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">Detected skills</p>
+          <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">
+            Detected skills {profile.skills.length > 0 && `(${profile.skills.length})`}
+          </p>
           <div className="mt-3 flex flex-wrap gap-1.5">
             {profile.skills.length ? (
-              profile.skills.slice(0, 8).map((s) => (
-                <span
-                  key={s}
-                  className="rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
-                >
-                  {s}
-                </span>
-              ))
+              <>
+                {profile.skills.slice(0, 14).map((s) => (
+                  <span
+                    key={s}
+                    className="rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
+                  >
+                    {s}
+                  </span>
+                ))}
+                {profile.skills.length > 14 && (
+                  <span className="rounded-full border border-signal/20 bg-signal/5 px-2.5 py-1 text-xs text-signal/70">
+                    +{profile.skills.length - 14} more
+                  </span>
+                )}
+              </>
             ) : (
               <span className="text-xs text-paper/40">None detected — we&apos;ll keep it behavioral.</span>
             )}
@@ -58,6 +87,29 @@ export default function BriefingScreen({
         <div
           className="glass-surface border border-mist/15 animate-rise rounded-xl p-4"
           style={{ animationDelay: "160ms", animationFillMode: "backwards" }}
+        >
+          <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">
+            Detected projects {profile.projects.length > 0 && `(${profile.projects.length})`}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {profile.projects.length ? (
+              profile.projects.slice(0, 6).map((p) => (
+                <span
+                  key={p.name}
+                  className="rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
+                >
+                  {p.name}
+                </span>
+              ))
+            ) : (
+              <span className="text-xs text-paper/40">None detected from resume text.</span>
+            )}
+          </div>
+        </div>
+
+        <div
+          className="glass-surface border border-mist/15 animate-rise rounded-xl p-4"
+          style={{ animationDelay: "240ms", animationFillMode: "backwards" }}
         >
           <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">Detected roles</p>
           <div className="mt-3 flex flex-wrap gap-1.5">

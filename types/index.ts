@@ -1,3 +1,8 @@
+export interface ResumeProject {
+  name: string;
+  description: string;
+}
+
 export interface ResumeProfile {
   rawText: string;
   name: string | null;
@@ -6,6 +11,10 @@ export interface ResumeProfile {
   companies: string[];
   yearsOfExperience: number | null;
   education: string[];
+  projects: ResumeProject[];
+  experienceBullets: string[];
+  certifications: string[];
+  achievements: string[];
 }
 
 export type QuestionCategory =
