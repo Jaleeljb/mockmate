@@ -5,7 +5,6 @@ import type { AnswerRecord, InterviewQuestion } from "@/types";
 import Timer from "./Timer";
 import Waveform from "./Waveform";
 import ProgressRail from "./ProgressRail";
-import InterviewerAvatar from "./InterviewerAvatar";
 import {
   cancelSpeech,
   countFillerWords,
@@ -214,38 +213,12 @@ export default function InterviewStage({
       <ProgressRail plan={questions} currentIndex={currentIndex} />
 
       <div className="glass-surface rounded-2xl border border-mist/15 p-6 sm:p-8">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
-          <div className="mx-auto shrink-0 sm:mx-0">
-            <div className="relative flex items-center justify-center">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -z-10 rounded-full blur-2xl transition-colors duration-700"
-                style={{
-                  background:
-                    phase === "speaking"
-                      ? "radial-gradient(circle, rgba(139,124,255,0.35), transparent 70%)"
-                      : phase === "listening"
-                      ? "radial-gradient(circle, rgba(61,220,151,0.28), transparent 70%)"
-                      : "radial-gradient(circle, rgba(139,124,255,0.12), transparent 70%)",
-                }}
-              />
-              <InterviewerAvatar
-                state={phase === "speaking" ? "speaking" : phase === "listening" ? "listening" : "idle"}
-                size={128}
-              />
-            </div>
-            <p className="mt-2 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-paper/35">
-              {phase === "speaking" ? "asking" : phase === "listening" ? "listening" : "onemock"}
-            </p>
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-signal">
-              Question {currentIndex + 1} of {questions.length} · {currentQuestion.category}
-            </p>
-            <h2 className="mt-3 font-display text-2xl font-medium leading-snug text-paper sm:text-3xl">
-              {currentQuestion.text}
-            </h2>
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-signal">
+          Question {currentIndex + 1} of {questions.length} · {currentQuestion.category}
+        </p>
+        <h2 className="mt-3 font-display text-2xl font-medium leading-snug text-paper sm:text-3xl">
+          {currentQuestion.text}
+        </h2>
 
         <div className="mt-6 flex items-center gap-3">
           <Waveform active={phase === "listening" && micActive} />
@@ -309,8 +282,6 @@ export default function InterviewStage({
             Tip: aim for at least {currentQuestion.minAnswerSeconds}s so your answer has room to land.
           </p>
         )}
-          </div>
-        </div>
       </div>
     </div>
   );
