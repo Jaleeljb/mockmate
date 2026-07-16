@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import type { InterviewQuestion, ResumeProfile } from "@/types";
 import { isSpeechRecognitionSupported, isSpeechSynthesisSupported } from "@/lib/speechUtils";
 import { MIN_INTERVIEW_SECONDS } from "@/lib/interviewEngine";
+import InterviewerAvatar from "./InterviewerAvatar";
 
 export default function BriefingScreen({
   profile,
@@ -21,9 +22,12 @@ export default function BriefingScreen({
 
   return (
     <div className="mx-auto w-full max-w-2xl animate-rise">
-      <h1 className="font-display text-3xl font-medium text-paper sm:text-4xl">
-        {profile.name ? `Ready when you are, ${profile.name.split(" ")[0]}.` : "Ready when you are."}
-      </h1>
+      <div className="flex items-center gap-4">
+        <InterviewerAvatar state="idle" size={64} className="shrink-0" />
+        <h1 className="font-display text-3xl font-medium text-paper sm:text-4xl">
+          {profile.name ? `Ready when you are, ${profile.name.split(" ")[0]}.` : "Ready when you are."}
+        </h1>
+      </div>
       <p className="mt-3 max-w-lg text-paper/60">
         This session runs at least {Math.round(MIN_INTERVIEW_SECONDS / 60)} minutes across{" "}
         {plan.length} questions, mixing intro, resume-specific, technical, and behavioral rounds.
