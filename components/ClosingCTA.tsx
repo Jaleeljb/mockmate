@@ -7,12 +7,12 @@ function scrollToId(id: string) {
 export default function ClosingCTA() {
   return (
     <section className="mx-auto max-w-5xl px-5 py-8 sm:px-10">
-      <div className="glass-surface relative overflow-hidden rounded-3xl border border-signal/20 px-6 py-14 text-center sm:px-16">
+      <div className="glass-panel relative overflow-hidden rounded-3xl border border-amber/20 px-6 py-14 text-center sm:px-16">
         <div
           className="pointer-events-none absolute inset-0 opacity-60"
           style={{
             background:
-              "radial-gradient(ellipse 500px 300px at 50% 0%, rgba(139,124,255,0.16), transparent 70%)",
+              "radial-gradient(ellipse 500px 300px at 50% 0%, rgba(201,166,107,0.16), transparent 70%)",
           }}
           aria-hidden
         />
@@ -25,7 +25,7 @@ export default function ClosingCTA() {
           </p>
           <button
             onClick={() => scrollToId("practice")}
-            className="mt-8 rounded-full bg-signal px-8 py-3.5 text-sm font-medium text-void shadow-[0_10px_36px_-8px_rgba(139,124,255,0.65)] transition-transform hover:scale-[1.02]"
+            className="mt-8 rounded-full bg-amber px-8 py-3.5 text-sm font-medium text-ink shadow-[0_10px_36px_-8px_rgba(201,166,107,0.65)] transition-transform hover:scale-[1.02]"
           >
             Start practicing free →
           </button>

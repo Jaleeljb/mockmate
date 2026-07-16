@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Logo from "./Logo";
 
 const NAV_LINKS = [
   { href: "#practice", label: "Home" },
@@ -25,10 +24,13 @@ export default function NavBar({
   const isLanding = phase === "upload";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-mist/10 bg-void/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-slate/10 bg-ink/70 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-10">
-        <button onClick={() => scrollToId("practice")} className="transition-opacity hover:opacity-80">
-          <Logo />
+        <button
+          onClick={() => scrollToId("practice")}
+          className="font-display text-lg font-medium tracking-tight text-paper"
+        >
+          Studio <span className="bg-gradient-to-r from-amber to-goldLight bg-clip-text text-transparent">15</span>
         </button>
 
         {isLanding ? (
@@ -38,7 +40,7 @@ export default function NavBar({
                 <button
                   key={link.href}
                   onClick={() => scrollToId(link.href)}
-                  className="font-mono text-xs uppercase tracking-[0.15em] text-paper/55 transition-colors hover:text-signal"
+                  className="font-mono text-xs uppercase tracking-[0.15em] text-paper/55 transition-colors hover:text-amber"
                 >
                   {link.label}
                 </button>
@@ -46,14 +48,14 @@ export default function NavBar({
             </nav>
             <button
               onClick={() => scrollToId("practice")}
-              className="hidden rounded-full bg-signal px-5 py-2 text-sm font-medium text-void shadow-[0_6px_20px_-6px_rgba(139,124,255,0.6)] transition-transform hover:scale-[1.02] md:inline-block"
+              className="hidden rounded-full bg-amber px-5 py-2 text-sm font-medium text-ink shadow-[0_6px_20px_-6px_rgba(201,166,107,0.6)] transition-transform hover:scale-[1.02] md:inline-block"
             >
               Start practicing
             </button>
             <button
               aria-label="Toggle menu"
               onClick={() => setMenuOpen((v) => !v)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-mist/25 text-paper/70 md:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate/25 text-paper/70 md:hidden"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 {menuOpen ? (
@@ -66,12 +68,12 @@ export default function NavBar({
           </>
         ) : (
           <div className="flex items-center gap-3">
-            <span className="rounded-full border border-mist/25 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-paper/40">
+            <span className="rounded-full border border-slate/25 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-paper/40">
               {phase}
             </span>
             <button
               onClick={onExit}
-              className="rounded-full border border-mist/30 px-4 py-1.5 text-xs text-paper/60 transition-colors hover:border-rec/50 hover:text-rec"
+              className="rounded-full border border-slate/30 px-4 py-1.5 text-xs text-paper/60 transition-colors hover:border-onair/50 hover:text-onair"
             >
               Exit session
             </button>
@@ -80,7 +82,7 @@ export default function NavBar({
       </div>
 
       {isLanding && menuOpen && (
-        <nav className="flex flex-col gap-1 border-t border-mist/10 bg-void/95 px-5 py-3 md:hidden">
+        <nav className="flex flex-col gap-1 border-t border-slate/10 bg-ink/95 px-5 py-3 md:hidden">
           {NAV_LINKS.map((link) => (
             <button
               key={link.href}
@@ -88,7 +90,7 @@ export default function NavBar({
                 setMenuOpen(false);
                 scrollToId(link.href);
               }}
-              className="rounded-lg px-2 py-2.5 text-left font-mono text-xs uppercase tracking-[0.15em] text-paper/60 hover:bg-surfaceHover/60 hover:text-signal"
+              className="rounded-lg px-2 py-2.5 text-left font-mono text-xs uppercase tracking-[0.15em] text-paper/60 hover:bg-panelLight/60 hover:text-amber"
             >
               {link.label}
             </button>

@@ -1,39 +1,36 @@
 import type { Metadata } from "next";
-import { Syne, Instrument_Serif, Manrope, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const display = Syne({
+const display = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["500", "700"],
   variable: "--font-display",
 });
 
-const serif = Instrument_Serif({
+const serif = Fraunces({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-serif",
 });
 
-const body = Manrope({
+const body = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-body",
 });
 
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
-  title: "onemock — one take. one mock. dead ready.",
+  title: "Studio 15 — Mock Interview Practice",
   description:
-    "Upload your resume and onemock runs a full 15-minute mock interview — timed, voiced, and scored on delivery, entirely in your browser.",
-  icons: {
-    icon: "/icon.svg",
-  },
+    "Upload your resume and run a full 15-minute mock interview, timed and voiced right in your browser.",
 };
 
 export default function RootLayout({
@@ -46,7 +43,7 @@ export default function RootLayout({
       lang="en"
       className={`scroll-smooth ${display.variable} ${serif.variable} ${body.variable} ${mono.variable}`}
     >
-      <body className="bg-void text-paper font-body antialiased">{children}</body>
+      <body className="bg-ink text-paper font-body antialiased">{children}</body>
     </html>
   );
 }

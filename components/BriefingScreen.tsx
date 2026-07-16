@@ -31,7 +31,7 @@ export default function BriefingScreen({
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         <div
-          className="glass-surface border border-mist/15 animate-rise rounded-xl p-4"
+          className="glass-panel border border-slate/15 animate-rise rounded-xl p-4"
           style={{ animationDelay: "80ms", animationFillMode: "backwards" }}
         >
           <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">Detected skills</p>
@@ -40,7 +40,7 @@ export default function BriefingScreen({
               profile.skills.slice(0, 8).map((s) => (
                 <span
                   key={s}
-                  className="rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
+                  className="rounded-full border border-slate/20 bg-panelLight/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-amber/40 hover:text-amber"
                 >
                   {s}
                 </span>
@@ -52,7 +52,7 @@ export default function BriefingScreen({
         </div>
 
         <div
-          className="glass-surface border border-mist/15 animate-rise rounded-xl p-4"
+          className="glass-panel border border-slate/15 animate-rise rounded-xl p-4"
           style={{ animationDelay: "160ms", animationFillMode: "backwards" }}
         >
           <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">Detected roles</p>
@@ -61,7 +61,7 @@ export default function BriefingScreen({
               profile.roles.slice(0, 5).map((r) => (
                 <span
                   key={r}
-                  className="rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
+                  className="rounded-full border border-slate/20 bg-panelLight/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-amber/40 hover:text-amber"
                 >
                   {r}
                 </span>
@@ -74,7 +74,7 @@ export default function BriefingScreen({
       </div>
 
       <div
-        className="glass-surface border border-mist/15 animate-rise mt-6 rounded-xl p-4"
+        className="glass-panel border border-slate/15 animate-rise mt-6 rounded-xl p-4"
         style={{ animationDelay: "240ms", animationFillMode: "backwards" }}
       >
         <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">Before you begin</p>
@@ -82,7 +82,7 @@ export default function BriefingScreen({
           <li className="flex gap-2.5">
             <span
               className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[10px] ${
-                voiceSupported ? "bg-good/15 text-good" : "bg-rec/15 text-rec"
+                voiceSupported ? "bg-good/15 text-good" : "bg-onair/15 text-onair"
               }`}
             >
               {voiceSupported ? "✓" : "✕"}
@@ -95,7 +95,7 @@ export default function BriefingScreen({
           <li className="flex gap-2.5">
             <span
               className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[10px] ${
-                micSupported ? "bg-good/15 text-good" : "bg-rec/15 text-rec"
+                micSupported ? "bg-good/15 text-good" : "bg-onair/15 text-onair"
               }`}
             >
               {micSupported ? "✓" : "✕"}
@@ -105,7 +105,7 @@ export default function BriefingScreen({
               : "Live speech-to-text isn't supported here — you can type your answers instead."}
           </li>
           <li className="flex gap-2.5">
-            <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-signal/15 text-[10px] text-signal">
+            <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-amber/15 text-[10px] text-amber">
               •
             </span>
             Find a quiet spot. You can always finish an answer early and move on.
@@ -116,13 +116,13 @@ export default function BriefingScreen({
       <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
         <button
           onClick={onRestart}
-          className="rounded-full border border-mist/40 px-5 py-3 text-sm text-paper/60 transition-colors hover:border-mist hover:text-paper"
+          className="rounded-full border border-slate/40 px-5 py-3 text-sm text-paper/60 transition-colors hover:border-slate hover:text-paper"
         >
           Upload a different resume
         </button>
         <button
           onClick={onBegin}
-          className="rounded-full bg-signal px-6 py-3 text-sm font-medium text-void shadow-[0_8px_30px_-8px_rgba(139,124,255,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_12px_36px_-6px_rgba(139,124,255,0.75)] active:scale-[0.98]"
+          className="rounded-full bg-amber px-6 py-3 text-sm font-medium text-ink shadow-[0_8px_30px_-8px_rgba(201,166,107,0.6)] transition-all hover:scale-[1.02] hover:shadow-[0_12px_36px_-6px_rgba(201,166,107,0.75)] active:scale-[0.98]"
         >
           Start the interview →
         </button>

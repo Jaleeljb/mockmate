@@ -1,3 +1,8 @@
+export interface RoleCompanyPair {
+  role: string;
+  company: string | null;
+}
+
 export interface ResumeProfile {
   rawText: string;
   name: string | null;
@@ -6,6 +11,12 @@ export interface ResumeProfile {
   companies: string[];
   yearsOfExperience: number | null;
   education: string[];
+  /** Roles paired with the nearest company mention in the text, in resume order. */
+  rolesWithCompanies: RoleCompanyPair[];
+  /** Sentences/bullets that mention a concrete metric or start with a strong action verb. */
+  highlights: string[];
+  /** Named projects/platforms/systems detected in the resume text. */
+  projects: string[];
 }
 
 export type QuestionCategory =

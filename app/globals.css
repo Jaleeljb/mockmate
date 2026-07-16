@@ -12,52 +12,34 @@ body {
 }
 
 body {
-  background-color: #050506;
+  background-color: #1b222c;
   background-image:
-    radial-gradient(ellipse 900px 620px at 14% -8%, rgba(139, 124, 255, 0.16), transparent 60%),
-    radial-gradient(ellipse 760px 680px at 108% 8%, rgba(139, 124, 255, 0.08), transparent 55%),
-    radial-gradient(ellipse 1000px 800px at 50% 118%, rgba(61, 220, 151, 0.05), transparent 60%);
+    radial-gradient(ellipse 900px 600px at 12% -10%, rgba(201, 166, 107, 0.16), transparent 60%),
+    radial-gradient(ellipse 800px 700px at 110% 10%, rgba(110, 156, 124, 0.10), transparent 55%),
+    radial-gradient(ellipse 1000px 800px at 50% 120%, rgba(91, 107, 124, 0.18), transparent 60%);
   background-attachment: fixed;
   position: relative;
 }
 
-/* Fine grain overlay, gently animated so the black field never sits perfectly
-   flat — a quiet signal that the page is alive rather than a static image. */
+/* Fine grain overlay for a tactile, "studio" surface rather than flat digital color */
 body::before {
   content: "";
   position: fixed;
-  inset: -10%;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.045;
+  opacity: 0.05;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 9s steps(8) infinite;
-}
-
-/* Hairline aperture grid — barely-there radial lines behind the hero,
-   reinforcing the lens/viewfinder motif without competing with content. */
-.aperture-field {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image:
-    linear-gradient(rgba(244, 242, 236, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 242, 236, 0.035) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, black, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, black, transparent 75%);
 }
 
 ::selection {
-  background: #8b7cff;
-  color: #050506;
+  background: #e3a857;
+  color: #1b222c;
 }
 
 :focus-visible {
-  outline: 2px solid #8b7cff;
+  outline: 2px solid #e3a857;
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -80,21 +62,21 @@ body::before {
   scrollbar-width: none;
 }
 
-/* Glass surface: the base treatment for every card in the app. Deliberately
-   carries no border of its own so it composes with whatever border utility
-   a given usage needs (solid, dashed, accent color, etc). */
-.glass-surface {
+/* Control-room glass panel: the base surface for every card in the app.
+   Deliberately carries no border of its own so it composes with whatever
+   border utility a given usage needs (solid, dashed, accent color, etc). */
+.glass-panel {
   position: relative;
-  background: linear-gradient(180deg, rgba(27, 27, 32, 0.7), rgba(17, 17, 20, 0.7));
+  background: linear-gradient(180deg, rgba(46, 57, 71, 0.7), rgba(35, 44, 56, 0.7));
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow:
     0 1px 0 0 rgba(255, 255, 255, 0.03) inset,
-    0 20px 40px -20px rgba(0, 0, 0, 0.65);
+    0 20px 40px -20px rgba(0, 0, 0, 0.55);
 }
 
-/* Viewfinder corner brackets — the signature element framing the live
-   question, evoking a camera/lens viewfinder rather than a generic card. */
+/* Viewfinder corner brackets — the signature element framing the live question,
+   evoking a camera/teleprompter viewfinder rather than a generic card. */
 .viewfinder {
   position: relative;
 }
@@ -104,8 +86,8 @@ body::before {
   position: absolute;
   width: 22px;
   height: 22px;
-  border-color: #8b7cff;
-  opacity: 0.9;
+  border-color: #e3a857;
+  opacity: 0.85;
   transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 .viewfinder::before {
@@ -124,29 +106,14 @@ body::before {
 }
 
 .text-glow {
-  text-shadow: 0 0 28px rgba(139, 124, 255, 0.4);
+  text-shadow: 0 0 24px rgba(201, 166, 107, 0.35);
 }
 
 .orb {
   position: fixed;
   border-radius: 9999px;
-  filter: blur(80px);
+  filter: blur(70px);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Shimmer sweep used behind the wordmark's ring mark and on skeleton /
-   loading states — a slow diagonal light pass rather than a spinner. */
-.shimmer-text {
-  background: linear-gradient(
-    100deg,
-    rgba(244, 242, 236, 0.55) 30%,
-    rgba(201, 191, 255, 1) 45%,
-    rgba(244, 242, 236, 0.55) 60%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 3.5s ease-in-out infinite;
-}

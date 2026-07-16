@@ -37,7 +37,7 @@ export default function FeaturesGrid() {
   return (
     <section id="features" className="mx-auto max-w-5xl px-5 py-24 sm:px-10">
       <div className="text-center">
-        <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-signal">Why onemock</p>
+        <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-amber">Why Studio 15</p>
         <h2 className="font-serif text-3xl italic leading-tight text-paper sm:text-4xl">
           Everything you need, nothing you don&apos;t.
         </h2>
@@ -47,9 +47,9 @@ export default function FeaturesGrid() {
         {FEATURES.map(({ icon: Icon, title, copy }) => (
           <div
             key={title}
-            className="glass-surface rounded-xl border border-mist/15 p-5 transition-colors hover:border-signal/30"
+            className="glass-panel rounded-xl border border-slate/15 p-5 transition-colors hover:border-amber/30"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-signal/10 text-signal">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber/10 text-amber">
               <Icon size={18} strokeWidth={1.75} />
             </div>
             <p className="mt-4 font-display text-base font-medium text-paper">{title}</p>

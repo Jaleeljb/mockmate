@@ -11,8 +11,8 @@ export default function Waveform({ active }: { active: boolean }) {
           style={{
             height: active ? `${h}px` : "4px",
             animationDelay: `${i * 90}ms`,
-            background: "linear-gradient(180deg, #C9BFFF, #8B7CFF)",
-            boxShadow: active ? "0 0 8px rgba(139,124,255,0.6)" : "none",
+            background: "linear-gradient(180deg, #EFE0B8, #C9A66B)",
+            boxShadow: active ? "0 0 8px rgba(201,166,107,0.55)" : "none",
           }}
         />
       ))}

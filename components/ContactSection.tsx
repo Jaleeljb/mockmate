@@ -2,19 +2,19 @@
 
 import { useState } from "react";
 
-const CONTACT_EMAIL = "hello@onemock.app";
+const CONTACT_EMAIL = "hello@studio15.app";
 
 export default function ContactSection() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
   const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-    `onemock — message from ${name || "a visitor"}`
+    `Studio 15 — message from ${name || "a visitor"}`
   )}&body=${encodeURIComponent(message)}`;
 
   return (
     <section id="contact" className="mx-auto max-w-3xl px-5 py-24 sm:px-10">
-      <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-signal">Get in touch</p>
+      <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-amber">Get in touch</p>
       <h2 className="font-serif text-3xl italic leading-tight text-paper sm:text-4xl">
         Notes, bugs, or ideas welcome.
       </h2>
@@ -24,7 +24,7 @@ export default function ContactSection() {
       </p>
 
       <form
-        className="glass-surface mt-8 rounded-2xl border border-mist/15 p-6 sm:p-8"
+        className="glass-panel mt-8 rounded-2xl border border-slate/15 p-6 sm:p-8"
         onSubmit={(e) => e.preventDefault()}
       >
         <div className="grid gap-5 sm:grid-cols-2">
@@ -34,7 +34,7 @@ export default function ContactSection() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Jordan Lee"
-              className="mt-2 w-full rounded-xl border border-mist/25 bg-void/40 px-4 py-3 text-paper placeholder:text-paper/30 focus:border-signal/60 focus:outline-none focus:ring-1 focus:ring-signal/30"
+              className="mt-2 w-full rounded-xl border border-slate/25 bg-ink/40 px-4 py-3 text-paper placeholder:text-paper/30 focus:border-amber/60 focus:outline-none focus:ring-1 focus:ring-amber/30"
             />
           </label>
           <label className="block">
@@ -42,7 +42,7 @@ export default function ContactSection() {
             <input
               type="email"
               placeholder="you@example.com"
-              className="mt-2 w-full rounded-xl border border-mist/25 bg-void/40 px-4 py-3 text-paper placeholder:text-paper/30 focus:border-signal/60 focus:outline-none focus:ring-1 focus:ring-signal/30"
+              className="mt-2 w-full rounded-xl border border-slate/25 bg-ink/40 px-4 py-3 text-paper placeholder:text-paper/30 focus:border-amber/60 focus:outline-none focus:ring-1 focus:ring-amber/30"
             />
           </label>
         </div>
@@ -54,18 +54,18 @@ export default function ContactSection() {
             onChange={(e) => setMessage(e.target.value)}
             rows={4}
             placeholder="Tell us what worked, what didn't, or what you'd like to see next."
-            className="mt-2 w-full rounded-xl border border-mist/25 bg-void/40 px-4 py-3 text-paper placeholder:text-paper/30 focus:border-signal/60 focus:outline-none focus:ring-1 focus:ring-signal/30"
+            className="mt-2 w-full rounded-xl border border-slate/25 bg-ink/40 px-4 py-3 text-paper placeholder:text-paper/30 focus:border-amber/60 focus:outline-none focus:ring-1 focus:ring-amber/30"
           />
         </label>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <a
             href={mailtoHref}
-            className="inline-flex justify-center rounded-full bg-signal px-6 py-3 text-sm font-medium text-void shadow-[0_8px_30px_-8px_rgba(139,124,255,0.6)] transition-transform hover:scale-[1.02]"
+            className="inline-flex justify-center rounded-full bg-amber px-6 py-3 text-sm font-medium text-ink shadow-[0_8px_30px_-8px_rgba(201,166,107,0.6)] transition-transform hover:scale-[1.02]"
           >
             Open in email client →
           </a>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="font-mono text-sm text-paper/50 hover:text-signal">
+          <a href={`mailto:${CONTACT_EMAIL}`} className="font-mono text-sm text-paper/50 hover:text-amber">
             {CONTACT_EMAIL}
           </a>
         </div>
