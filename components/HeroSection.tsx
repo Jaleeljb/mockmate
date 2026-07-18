@@ -33,7 +33,7 @@ export default function HeroSection() {
       </h1>
 
       <p className="mx-auto mt-6 max-w-xl text-balance text-paper/60 sm:text-lg">
-        Upload your resume and onemock runs a full, timed 15-minute interview —
+        Upload your resume and onemock runs a full, 20–25 question interview —
         questions pulled from your own experience, spoken aloud, and scored on
         delivery. No AI grading your content, no server, no account.
       </p>

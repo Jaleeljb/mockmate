@@ -1,5 +1,5 @@
 const STATS = [
-  { value: "15 min", label: "Minimum session length" },
+  { value: "20–25", label: "Questions per session" },
   { value: "3", label: "File formats — PDF, DOCX, TXT" },
   { value: "$0", label: "Cost — no account, no API key" },
 ];

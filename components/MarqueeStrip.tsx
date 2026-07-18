@@ -2,7 +2,7 @@ const TAGS = [
   "Resume-aware questions",
   "Runs fully in your browser",
   "Voice or typed answers",
-  "15-minute minimum session",
+  "20–25 question sessions",
   "Zero accounts, zero cost",
   "Rule-based feedback report",
   "PDF · DOCX · TXT support",

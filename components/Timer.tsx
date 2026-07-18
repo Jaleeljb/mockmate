@@ -6,16 +6,13 @@ function pad(n: number): string {
 
 export default function Timer({
   elapsedSeconds,
-  targetSeconds,
   live,
 }: {
   elapsedSeconds: number;
-  targetSeconds: number;
   live: boolean;
 }) {
   const minutes = Math.floor(elapsedSeconds / 60);
   const seconds = Math.floor(elapsedSeconds % 60);
-  const reachedTarget = elapsedSeconds >= targetSeconds;
 
   return (
     <div className="glass-surface flex flex-wrap items-center gap-3 rounded-full border border-mist/15 px-4 py-2.5">
@@ -31,14 +28,6 @@ export default function Timer({
       <span className="font-mono text-2xl tabular-nums text-paper">
         {pad(minutes)}:{pad(seconds)}
       </span>
-      <span className="font-mono text-xs text-paper/40">
-        / {Math.floor(targetSeconds / 60)}:{pad(targetSeconds % 60)} min
-      </span>
-      {reachedTarget && (
-        <span className="rounded-full bg-good/15 px-2 py-0.5 font-mono text-xs text-good">
-          floor met
-        </span>
-      )}
     </div>
   );
 }

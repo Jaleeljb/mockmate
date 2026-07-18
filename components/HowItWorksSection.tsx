@@ -6,8 +6,8 @@ const STEPS = [
   },
   {
     n: "02",
-    title: "Run the 15-minute session",
-    copy: "Questions are read aloud one at a time — an intro, resume-specific, technical, and behavioral rounds — while a live clock keeps the pace honest.",
+    title: "Run the 20–25 question session",
+    copy: "Questions are read aloud one at a time — an intro, resume-specific, technical, and behavioral rounds — while a live clock tracks your pace.",
   },
   {
     n: "03",
@@ -22,7 +22,7 @@ export default function HowItWorksSection() {
       <div className="text-center">
         <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-signal">How it works</p>
         <h2 className="font-serif text-3xl italic leading-tight text-paper sm:text-4xl">
-          Three steps, fifteen minutes.
+          Three steps, one full mock.
         </h2>
       </div>
 

@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import type { InterviewQuestion, ResumeProfile } from "@/types";
 import { isSpeechRecognitionSupported, isSpeechSynthesisSupported } from "@/lib/speechUtils";
-import { MIN_INTERVIEW_SECONDS } from "@/lib/interviewEngine";
+import { estimatedPlanSeconds } from "@/lib/interviewEngine";
 import { buildResumeFacts, summarizeFacts } from "@/lib/resumeFacts";
 import InterviewerAvatar from "./InterviewerAvatar";
 
@@ -29,6 +29,7 @@ export default function BriefingScreen({
     factsSummary.certification +
     factsSummary.education +
     factsSummary.achievement;
+  const estimatedMinutes = Math.round(estimatedPlanSeconds(plan) / 60);
 
   return (
     <div className="mx-auto w-full max-w-2xl animate-rise">
@@ -39,8 +40,8 @@ export default function BriefingScreen({
         </h1>
       </div>
       <p className="mt-3 max-w-lg text-paper/60">
-        This session runs at least {Math.round(MIN_INTERVIEW_SECONDS / 60)} minutes across{" "}
-        {plan.length} questions, mixing intro, resume-specific, technical, and behavioral rounds.
+        This session runs {plan.length} questions — about {estimatedMinutes} minutes — mixing intro,
+        resume-specific, technical, and behavioral rounds.
         {totalFacts > 0 && (
           <>
             {" "}
@@ -55,29 +56,22 @@ export default function BriefingScreen({
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div
-          className="glass-surface border border-mist/15 animate-rise rounded-xl p-4"
+          className="glass-surface border border-mist/15 animate-rise flex h-48 flex-col rounded-xl p-4"
           style={{ animationDelay: "80ms", animationFillMode: "backwards" }}
         >
-          <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">
+          <p className="shrink-0 font-mono text-[10px] uppercase tracking-wide text-paper/40">
             Detected skills {profile.skills.length > 0 && `(${profile.skills.length})`}
           </p>
-          <div className="mt-3 flex flex-wrap gap-1.5">
+          <div className="thin-scrollbar mt-3 flex min-h-0 flex-1 flex-wrap content-start gap-1.5 overflow-y-auto pr-1">
             {profile.skills.length ? (
-              <>
-                {profile.skills.slice(0, 14).map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
-                  >
-                    {s}
-                  </span>
-                ))}
-                {profile.skills.length > 14 && (
-                  <span className="rounded-full border border-signal/20 bg-signal/5 px-2.5 py-1 text-xs text-signal/70">
-                    +{profile.skills.length - 14} more
-                  </span>
-                )}
-              </>
+              profile.skills.map((s) => (
+                <span
+                  key={s}
+                  className="h-fit rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
+                >
+                  {s}
+                </span>
+              ))
             ) : (
               <span className="text-xs text-paper/40">None detected — we&apos;ll keep it behavioral.</span>
             )}
@@ -85,18 +79,18 @@ export default function BriefingScreen({
         </div>
 
         <div
-          className="glass-surface border border-mist/15 animate-rise rounded-xl p-4"
+          className="glass-surface border border-mist/15 animate-rise flex h-48 flex-col rounded-xl p-4"
           style={{ animationDelay: "160ms", animationFillMode: "backwards" }}
         >
-          <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">
+          <p className="shrink-0 font-mono text-[10px] uppercase tracking-wide text-paper/40">
             Detected projects {profile.projects.length > 0 && `(${profile.projects.length})`}
           </p>
-          <div className="mt-3 flex flex-wrap gap-1.5">
+          <div className="thin-scrollbar mt-3 flex min-h-0 flex-1 flex-wrap content-start gap-1.5 overflow-y-auto pr-1">
             {profile.projects.length ? (
-              profile.projects.slice(0, 6).map((p) => (
+              profile.projects.map((p) => (
                 <span
                   key={p.name}
-                  className="rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
+                  className="h-fit rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
                 >
                   {p.name}
                 </span>
@@ -108,16 +102,18 @@ export default function BriefingScreen({
         </div>
 
         <div
-          className="glass-surface border border-mist/15 animate-rise rounded-xl p-4"
+          className="glass-surface border border-mist/15 animate-rise flex h-48 flex-col rounded-xl p-4"
           style={{ animationDelay: "240ms", animationFillMode: "backwards" }}
         >
-          <p className="font-mono text-[10px] uppercase tracking-wide text-paper/40">Detected roles</p>
-          <div className="mt-3 flex flex-wrap gap-1.5">
+          <p className="shrink-0 font-mono text-[10px] uppercase tracking-wide text-paper/40">
+            Detected roles {profile.roles.length > 0 && `(${profile.roles.length})`}
+          </p>
+          <div className="thin-scrollbar mt-3 flex min-h-0 flex-1 flex-wrap content-start gap-1.5 overflow-y-auto pr-1">
             {profile.roles.length ? (
-              profile.roles.slice(0, 5).map((r) => (
+              profile.roles.map((r) => (
                 <span
                   key={r}
-                  className="rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
+                  className="h-fit rounded-full border border-mist/20 bg-surfaceHover/80 px-2.5 py-1 text-xs text-paper/80 transition-colors hover:border-signal/40 hover:text-signal"
                 >
                   {r}
                 </span>

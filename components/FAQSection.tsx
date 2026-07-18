@@ -9,15 +9,15 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "What if my browser doesn't support voice input?",
-    a: "Live speech-to-text currently works best in Chrome and Edge. If it's unavailable, questions are still read aloud (or shown as text), and you can simply type your answers in the box provided — the full 15-minute session still runs normally.",
+    a: "Live speech-to-text currently works best in Chrome and Edge. If it's unavailable, questions are still read aloud (or shown as text), and you can simply type your answers in the box provided — the full session still runs normally.",
   },
   {
     q: "Can I end an answer early or go back?",
     a: "You can move to the next question whenever you're ready. There's no going back to a previous answer mid-session — like a real interview, you keep moving forward. You can always start a fresh session afterward.",
   },
   {
-    q: "Why does the session sometimes run longer than 15 minutes?",
-    a: "The question plan is sized to comfortably clear 15 minutes. If you answer faster than expected, the session pulls in an extra question rather than ending early, so you always get the full rehearsal.",
+    q: "Why does the number of questions vary between 20 and 25?",
+    a: "Each session lands on a slightly different count in that range so runs don't feel identical. Resume-specific questions are prioritized first — the richer your resume, the more of the session draws directly from it — then behavioral and technical rounds fill out the rest.",
   },
   {
     q: "Is this free to use?",

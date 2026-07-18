@@ -8,14 +8,19 @@ import {
   questionFromFact,
 } from "./questionBank";
 
-export const MIN_INTERVIEW_SECONDS = 15 * 60; // hard floor required by the brief
-const QUESTION_OVERHEAD_SECONDS = 14; // time spent on TTS + transition between questions
+// Every session asks a fixed number of questions rather than running to a
+// clock — somewhere in this range, picked once per session for a little
+// natural variation rather than always landing on the exact same number.
+export const MIN_QUESTIONS = 20;
+export const MAX_QUESTIONS = 25;
 
-// Total resume-driven questions in a single session, and how many of each
-// fact type are allowed to contribute — keeps a resume with, say, 40
-// detected skills and 8 projects from turning into a 45-minute grilling on
-// skills alone. Round-robin selection below still guarantees a mix.
-const MAX_RESUME_QUESTIONS = 9;
+const QUESTION_OVERHEAD_SECONDS = 14; // time spent on TTS + transition between questions, for duration estimates only
+
+// How many resume-driven questions are allowed to contribute, and how many
+// of each fact type — keeps a resume with, say, 40 detected skills from
+// crowding out behavioral/technical variety. Round-robin selection below
+// still guarantees a mix across whatever's available.
+const MAX_RESUME_QUESTIONS = 12;
 const TYPE_PRIORITY: ResumeFactType[] = [
   "role",
   "project",
@@ -29,7 +34,7 @@ const TYPE_PRIORITY: ResumeFactType[] = [
 const TYPE_CAP: Record<ResumeFactType, number> = {
   role: 2,
   project: 3,
-  skill: 4,
+  skill: 5,
   experience_bullet: 3,
   achievement: 1,
   certification: 1,
@@ -39,6 +44,10 @@ const TYPE_CAP: Record<ResumeFactType, number> = {
 
 function normalizeText(text: string): string {
   return text.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function pickTargetQuestionCount(): number {
+  return MIN_QUESTIONS + Math.floor(Math.random() * (MAX_QUESTIONS - MIN_QUESTIONS + 1));
 }
 
 /**
@@ -100,23 +109,28 @@ function estimateSeconds(question: InterviewQuestion): number {
 }
 
 /**
- * Builds a full interview plan for this candidate's resume, sized so the
- * estimated total run time is at least MIN_INTERVIEW_SECONDS (15 minutes).
- * The live session timer independently enforces the floor even if a
- * candidate answers faster than estimated (see getFillerQuestion).
+ * Builds a full interview plan for this candidate's resume: a fixed number
+ * of questions — MIN_QUESTIONS to MAX_QUESTIONS, picked once per session —
+ * opening with the standard intro, closing with the standard "questions for
+ * me?", and resume-specific content prioritized in between, topped up with
+ * behavioral/technical questions to reach the target count exactly.
  */
 export function buildInterviewPlan(profile: ResumeProfile): InterviewQuestion[] {
+  const target = pickTargetQuestionCount();
+
   const plan: InterviewQuestion[] = [];
   const usedIds = new Set<string>();
   const usedText = new Set<string>();
 
   const push = (question: InterviewQuestion) => {
-    if (usedIds.has(question.id)) return;
+    if (plan.length >= target) return false;
+    if (usedIds.has(question.id)) return false;
     const key = normalizeText(question.text);
-    if (usedText.has(key)) return;
+    if (usedText.has(key)) return false;
     usedIds.add(question.id);
     usedText.add(key);
     plan.push(question);
+    return true;
   };
 
   const facts = buildResumeFacts(profile);
@@ -124,19 +138,17 @@ export function buildInterviewPlan(profile: ResumeProfile): InterviewQuestion[] 
   OPENING_POOL.forEach(push);
   buildResumeQuestions(facts).forEach(push);
 
-  let runningTotal = plan.reduce((sum, question) => sum + estimateSeconds(question), 0);
-  const closingReserve = estimateSeconds(CLOSING_POOL[0]);
-
+  // Reserve the very last slot for the closing question — fill everything
+  // before it with behavioral/technical questions, on a rough 2:1 cadence,
+  // falling back to whichever pool still has questions if the "due" one
+  // has already run dry (only stop once both are genuinely empty).
   const behavioralQueue = [...BEHAVIORAL_POOL];
   const technicalQueue = [...GENERIC_TECHNICAL_POOL];
 
   let guard = 0;
-  while (runningTotal + closingReserve < MIN_INTERVIEW_SECONDS && guard < 80) {
+  while (plan.length < target - 1 && guard < 200) {
     guard += 1;
 
-    // Pull from whichever queue is "due" on a roughly 2:1 behavioral:technical
-    // cadence, but fall back to the other queue if the due one has already
-    // run dry — only stop once BOTH are genuinely empty.
     let next: InterviewQuestion | undefined;
     if (guard % 3 === 0 && technicalQueue.length) {
       next = technicalQueue.shift();
@@ -145,28 +157,15 @@ export function buildInterviewPlan(profile: ResumeProfile): InterviewQuestion[] 
     } else if (technicalQueue.length) {
       next = technicalQueue.shift();
     }
-    if (!next) break;
+    if (!next) break; // both queues genuinely empty — stop rather than loop forever
 
-    const before = plan.length;
     push(next);
-    if (plan.length === before) continue; // deduped — keep going, pool isn't exhausted
-    runningTotal += estimateSeconds(next);
   }
 
   const closing = CLOSING_POOL.find((c) => !usedIds.has(c.id)) || CLOSING_POOL[0];
   push(closing);
 
   return plan;
-}
-
-/**
- * Returns an unused behavioral/technical question to extend a live session
- * that is running under 15 minutes despite the pre-built plan (e.g. very
- * short answers throughout).
- */
-export function getFillerQuestion(usedIds: Set<string>): InterviewQuestion | null {
-  const pool = [...BEHAVIORAL_POOL, ...GENERIC_TECHNICAL_POOL];
-  return pool.find((question) => !usedIds.has(question.id)) || null;
 }
 
 export function estimatedPlanSeconds(plan: InterviewQuestion[]): number {

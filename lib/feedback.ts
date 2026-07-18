@@ -210,11 +210,6 @@ export function buildFeedback(answers: AnswerRecord[], totalDurationSeconds: num
     }
   }
 
-  // --- Session length ---
-  if (totalDurationSeconds >= 15 * 60) {
-    strengths.push("You held the full 15-minute session — solid stamina for a real interview loop.");
-  }
-
   if (strengths.length === 0) {
     strengths.push("Not enough strong signal yet — answer more fully in your next run to surface clear strengths.");
   }

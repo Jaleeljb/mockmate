@@ -30,7 +30,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "onemock — one take. one mock. dead ready.",
   description:
-    "Upload your resume and onemock runs a full 15-minute mock interview — timed, voiced, and scored on delivery, entirely in your browser.",
+    "Upload your resume and onemock runs a full 20–25 question mock interview — voiced, and scored on delivery, entirely in your browser.",
   icons: {
     icon: "/icon.svg",
   },

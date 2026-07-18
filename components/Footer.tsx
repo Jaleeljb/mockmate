@@ -48,7 +48,7 @@ export default function Footer() {
             <ul className="mt-3 space-y-2 text-sm text-paper/60">
               <li>Resumes are parsed locally, never uploaded</li>
               <li>Works best in Chrome or Edge for voice</li>
-              <li>Sessions run at least 15 minutes</li>
+              <li>20–25 questions per session</li>
             </ul>
           </div>
         </div>

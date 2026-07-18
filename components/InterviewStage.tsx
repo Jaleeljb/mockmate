@@ -16,7 +16,7 @@ import {
   startRecognition,
   type RecognitionHandle,
 } from "@/lib/speechUtils";
-import { MIN_INTERVIEW_SECONDS, getFillerQuestion } from "@/lib/interviewEngine";
+
 
 type StagePhase = "speaking" | "listening" | "paused";
 
@@ -27,7 +27,7 @@ export default function InterviewStage({
   initialPlan: InterviewQuestion[];
   onComplete: (answers: AnswerRecord[], totalDurationSeconds: number) => void;
 }) {
-  const [questions, setQuestions] = useState<InterviewQuestion[]>(initialPlan);
+  const questions = initialPlan;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState<StagePhase>("speaking");
   const [transcript, setTranscript] = useState("");
@@ -37,7 +37,6 @@ export default function InterviewStage({
   const [finishing, setFinishing] = useState(false);
 
   const answersRef = useRef<AnswerRecord[]>([]);
-  const usedIdsRef = useRef<Set<string>>(new Set(initialPlan.map((q) => q.id)));
   const recognitionRef = useRef<RecognitionHandle | null>(null);
   const interimRef = useRef("");
   const finalRef = useRef("");
@@ -159,27 +158,6 @@ export default function InterviewStage({
     }
 
     const isLastPlanned = currentIndex >= questions.length - 1;
-    const nextQuestion = questions[currentIndex + 1];
-    const nextIsClosing = nextQuestion?.category === "closing";
-
-    // Running under the 15-minute floor with only the closing question left
-    // (or nothing left at all) — insert a filler question ahead of the
-    // closing question so it still lands last.
-    if ((isLastPlanned || nextIsClosing) && elapsedSeconds < MIN_INTERVIEW_SECONDS) {
-      const filler = getFillerQuestion(usedIdsRef.current);
-      if (filler) {
-        usedIdsRef.current.add(filler.id);
-        setQuestions((prev) => {
-          const insertAt = nextIsClosing ? currentIndex + 1 : prev.length;
-          const next = [...prev];
-          next.splice(insertAt, 0, filler);
-          return next;
-        });
-        setCurrentIndex((i) => i + 1);
-        return;
-      }
-    }
-
     if (isLastPlanned) {
       setFinishing(true);
       cancelSpeech();
@@ -208,7 +186,7 @@ export default function InterviewStage({
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 animate-rise">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <Timer elapsedSeconds={elapsedSeconds} targetSeconds={MIN_INTERVIEW_SECONDS} live={phase !== "paused"} />
+        <Timer elapsedSeconds={elapsedSeconds} live={phase !== "paused"} />
       </div>
 
       <ProgressRail plan={questions} currentIndex={currentIndex} />
@@ -243,9 +221,11 @@ export default function InterviewStage({
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-signal">
               Question {currentIndex + 1} of {questions.length} · {currentQuestion.category}
             </p>
-            <h2 className="mt-3 font-display text-2xl font-medium leading-snug text-paper sm:text-3xl">
-              {currentQuestion.text}
-            </h2>
+            <div className="mt-3 flex min-h-[96px] items-center sm:min-h-[112px]">
+              <h2 className="thin-scrollbar max-h-[168px] overflow-y-auto pr-1 font-display text-2xl font-medium leading-snug text-paper sm:max-h-[192px] sm:text-3xl">
+                {currentQuestion.text}
+              </h2>
+            </div>
 
         <div className="mt-6 flex items-center gap-3">
           <Waveform active={phase === "listening" && micActive} />
