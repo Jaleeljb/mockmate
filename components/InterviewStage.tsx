@@ -17,7 +17,6 @@ import {
   type RecognitionHandle,
 } from "@/lib/speechUtils";
 
-
 type StagePhase = "speaking" | "listening" | "paused";
 
 export default function InterviewStage({
@@ -184,7 +183,7 @@ export default function InterviewStage({
   const minReached = answerElapsed >= currentQuestion.minAnswerSeconds;
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 animate-rise">
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 animate-rise">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <Timer elapsedSeconds={elapsedSeconds} live={phase !== "paused"} />
       </div>
@@ -222,7 +221,10 @@ export default function InterviewStage({
               Question {currentIndex + 1} of {questions.length} · {currentQuestion.category}
             </p>
             <div className="mt-3 flex min-h-[96px] items-center sm:min-h-[112px]">
-              <h2 className="thin-scrollbar max-h-[168px] overflow-y-auto pr-1 font-display text-2xl font-medium leading-snug text-paper sm:max-h-[192px] sm:text-3xl">
+              <h2
+                className="thin-scrollbar max-h-[168px] overflow-y-auto pr-1 font-display text-2xl font-medium leading-snug text-paper sm:max-h-[192px] sm:text-3xl"
+                style={{ scrollbarGutter: "stable" }}
+              >
                 {currentQuestion.text}
               </h2>
             </div>

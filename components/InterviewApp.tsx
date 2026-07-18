@@ -107,7 +107,7 @@ export default function InterviewApp() {
             {content}
           </section>
         ) : (
-          <section id="practice" className="mx-auto max-w-3xl px-5 py-16 sm:px-10">
+          <section id="practice" className="mx-auto max-w-5xl px-5 py-16 sm:px-10">
             <div className="viewfinder rounded-3xl border border-mist/15 bg-surface/25 p-6 backdrop-blur-sm sm:p-10">
               <p className="mb-6 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-signal">
                 onemock · {PANEL_EYEBROW[phase]}
