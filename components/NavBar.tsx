@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import Logo from "./Logo";
 
-const NAV_LINKS = [
+const NAV_LINKS: { href: string; label: string; external?: boolean }[] = [
   { href: "#practice", label: "Home" },
   { href: "#features", label: "Features" },
   { href: "#faq", label: "FAQ" },
   { href: "#contact", label: "Contact" },
+  { href: "https://makeresu.vercel.app/", label: "MakeResu", external: true },
 ];
 
 function scrollToId(id: string) {
@@ -53,15 +55,28 @@ export default function NavBar({
 
         {isLanding ? (
           <nav className="hidden items-center justify-center gap-9 md:flex">
-            {NAV_LINKS.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => scrollToId(link.href)}
-                className="font-mono text-xs uppercase tracking-[0.15em] text-paper/55 transition-colors hover:text-signal"
-              >
-                {link.label}
-              </button>
-            ))}
+            {NAV_LINKS.map((link) =>
+              link.external ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-mono text-xs uppercase tracking-[0.15em] text-paper/55 transition-colors hover:text-signal"
+                >
+                  {link.label}
+                  <ArrowUpRight size={12} strokeWidth={2.25} />
+                </a>
+              ) : (
+                <button
+                  key={link.href}
+                  onClick={() => scrollToId(link.href)}
+                  className="font-mono text-xs uppercase tracking-[0.15em] text-paper/55 transition-colors hover:text-signal"
+                >
+                  {link.label}
+                </button>
+              )
+            )}
           </nav>
         ) : (
           <div />
@@ -108,18 +123,32 @@ export default function NavBar({
 
       {isLanding && menuOpen && (
         <nav className="flex flex-col gap-1 border-t border-mist/10 bg-void/95 px-5 py-3 md:hidden">
-          {NAV_LINKS.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => {
-                setMenuOpen(false);
-                scrollToId(link.href);
-              }}
-              className="rounded-lg px-2 py-2.5 text-left font-mono text-xs uppercase tracking-[0.15em] text-paper/60 hover:bg-surfaceHover/60 hover:text-signal"
-            >
-              {link.label}
-            </button>
-          ))}
+          {NAV_LINKS.map((link) =>
+            link.external ? (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-1.5 rounded-lg px-2 py-2.5 text-left font-mono text-xs uppercase tracking-[0.15em] text-paper/60 hover:bg-surfaceHover/60 hover:text-signal"
+              >
+                {link.label}
+                <ArrowUpRight size={12} strokeWidth={2.25} />
+              </a>
+            ) : (
+              <button
+                key={link.href}
+                onClick={() => {
+                  setMenuOpen(false);
+                  scrollToId(link.href);
+                }}
+                className="rounded-lg px-2 py-2.5 text-left font-mono text-xs uppercase tracking-[0.15em] text-paper/60 hover:bg-surfaceHover/60 hover:text-signal"
+              >
+                {link.label}
+              </button>
+            )
+          )}
         </nav>
       )}
     </header>
